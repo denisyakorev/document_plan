@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
+from django.contrib.auth.models import User
 
 
 # Create your models here.
@@ -13,6 +14,8 @@ class Project(models.Model):
     auditory_profiles = models.ManyToManyField("AuditoryProfile", blank=True, verbose_name=_("auditory_profiles"))
     questions = models.ManyToManyField("Question", blank=True, verbose_name=_("questions"))
     chapters = models.ManyToManyField("Chapter", blank=True, verbose_name=_("chapters"))
+    created_at = models.DateField(auto_now_add=True)
+    created_by = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __unicode__(self):
         return self.name
@@ -20,6 +23,7 @@ class Project(models.Model):
     class Meta:
         verbose_name = _("project")
         verbose_name_plural = _("projects")
+        ordering = ["-created_at"]
 
 
 class AuditoryProfile(models.Model):
