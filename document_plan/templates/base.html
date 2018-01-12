@@ -23,37 +23,7 @@
 </head>
 
 <body>
-<header class="bg-dark">
-    <div class="container">
-      <nav class="navbar navbar-expand-md no-gutters">
-        <div class="col-3 text-left">
-          <a href="#">
-            <img src="{% static "/imgs/logo.png" %}" height="60" alt="image">
-          </a>
-        </div>
-
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse-4" aria-controls="navbarNav7" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <div class="collapse navbar-collapse navbar-collapse-4 justify-content-center col-md-6" id="navbarNav7">
-          <ul class="navbar-nav justify-content-center">
-          </ul>
-        </div>
-
-        <div class="collapse navbar-collapse navbar-collapse-4">
-          <ul class="navbar-nav ml-auto justify-content-end">
-            <li class="nav-item">
-              <a class="nav-link" href="#">Log In</a>
-            </li>
-          </ul>
-
-          <a class="btn ml-md-3" href="#">Register</a>
-        </div>
-      </nav>
-    </div>
-  </header>
-
+  {% include "header.html" %}
   <!--Заглавная иллюстрация-->
   <section class="fdb-block fdb-image-bg" style="background-image: url('{% static "imgs/alt_wide_2.svg" %}');">
     <div class="container">
@@ -170,25 +140,7 @@
   </section>
 
   <!--Футер-->
-  <footer class="fdb-block footer-small bg-dark">
-    <div class="container">
-      <div class="row text-center align-items-center">
-        <div class="col-12 col-sm-6 col-md-4 text-sm-left">
-          <img alt="image" src="{% static "/imgs/logo.png" %}" height="40">
-        </div>
-
-        <div class="col-12 col-sm-6 col-md-4 mt-4 mt-sm-0 text-center text-sm-right text-md-center">
-          &copy; 2018 Document Plan
-        </div>
-
-        <div class="col-12 col-md-4 mt-4 mt-md-0 text-center text-md-right">
-          <a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a>&nbsp;&nbsp;
-          <a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a>&nbsp;&nbsp;
-
-        </div>
-      </div>
-    </div>
-  </footer>
+  {% include "footer.html" %}
 
 
   <script src="{% static "/js/jquery-3.2.1.slim.min.js" %}"></script>
