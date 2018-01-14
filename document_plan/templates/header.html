@@ -4,7 +4,7 @@
     <div class="container">
       <nav class="navbar navbar-expand-md no-gutters">
         <div class="col-3 text-left">
-          <a href="#">
+          <a href="/docplan/">
             <img src="{% static "/imgs/logo.png" %}" height="60" alt="image">
           </a>
         </div>
@@ -17,16 +17,29 @@
           <ul class="navbar-nav justify-content-center">
           </ul>
         </div>
-
-        <div class="collapse navbar-collapse navbar-collapse-4">
-          <ul class="navbar-nav ml-auto justify-content-end">
+         <div class="collapse navbar-collapse navbar-collapse-4">
+           <ul class="navbar-nav ml-auto justify-content-end">
+        {% if not user.is_authenticated %}
             <li class="nav-item">
-              <a class="nav-link" href="#">Log In</a>
+              <a class="nav-link" href="/accounts/login/">Log In</a>
             </li>
           </ul>
-
-          <a class="btn ml-md-3" href="#">Register</a>
+          <a class="btn ml-md-3" href="/accounts/signup/">Register</a>
         </div>
+        {% else %}
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">{{ user.username }}</a>
+              <div class="dropdown-menu">
+                <a class="dropdown-item" href="/accounts/profile/">Profile</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="/accounts/logout/">Logout</a>
+              </div>
+            </li>
+          </ul>
+        </div>
+        {% endif %}
+
+
       </nav>
     </div>
   </header>

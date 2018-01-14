@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+{% load static %}
+{% load i18n %}
+
+{% block content %}
+<!--Логин-->
+  <section class="fdb-block full-center-height" >
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-12 col-md-8 col-lg-7 col-xl-5 text-center">
+          <div class="fdb-box fdb-touch">
+            <div class="row">
+              <div class="col">
+                <h1>Sign Up</h1>
+              </div>
+            </div>
+              <form action="" method="post">
+                  {% csrf_token %}
+                {% if form.errors %}
+                <div class="alert alert-danger" role="alert">
+                  {% trans "Something wrong. Check your input information" %}
+                </div>
+                {% endif %}
+                <div class="row mt-4">
+                  <div class="col">
+                    <input type="text" name="username" id="username" class="form-control" placeholder="Email">
+                    <div class="alert alert-info" role="alert">
+                        {% trans "Your e-mail can include letters, digits and symbols: @ _ + -" %}
+                    </div>
+                  </div>
+
+                </div>
+                <div class="row mt-4">
+                  <div class="col">
+                    <input type="password" name="password1" id="password1" class="form-control mb-1" placeholder="Password">
+                    <div class="alert alert-info" role="alert">
+                        {% trans "Your password must contain at least 8 characters and can't be entirely numeric" %}
+                    </div>
+                  </div>
+                </div>
+                <div class="row mt-4">
+                  <div class="col">
+                    <input type="password" name="password2" id="password2" class="form-control mb-1" placeholder="Confirm Password">
+                    <div class="alert alert-info" role="alert">
+                        {% trans "Enter the same password as before, for verification" %}
+                    </div>
+                  </div>
+                </div>
+                <div class="row mt-4">
+                  <div class="col">
+                    <input class="btn" type="submit" value="Submit"></input>
+                  </div>
+                </div>
+              </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <div>
+{% endblock %}

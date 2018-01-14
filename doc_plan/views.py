@@ -1,5 +1,8 @@
-from django.shortcuts import render, render_to_response
+from django.shortcuts import render
+from django.template import loader, RequestContext
 
 # Create your views here.
 def home(request):
-    return render_to_response('base.html')
+    template = loader.get_template('landing/content.html')
+    context = {'user':request.user,}
+    return render(request, 'landing/content.html', context)

@@ -16,8 +16,15 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from django.urls import include
+from django.contrib.auth.views import login, logout
+from accounts import views as accounts
+from doc_plan import views as doc_plan
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('docplan/', include('doc_plan.urls'))
+    path('docplan/', include('doc_plan.urls')),
+    path('accounts/login/', login),
+    path('accounts/logout/', logout, {'next_page':'/docplan/'}),
+    path('accounts/signup/', accounts.signup),
+    path('accounts/profile/', doc_plan.home)
 ]
