@@ -1,8 +1,19 @@
 from django.shortcuts import render
 from django.template import loader, RequestContext
+from django.views.generic.list import ListView
+
+
+from doc_plan.models import Project
 
 # Create your views here.
-def home(request):
-    template = loader.get_template('landing/content.html')
-    context = {'user':request.user,}
-    return render(request, 'landing/content.html', context)
+class ProjectListView(ListView):
+    model = Project
+    context_object_name = 'projects'
+    template_name = 'projects.html'
+
+    @method_decorator(login_required)
+    def get_queryset(self):
+        qs = Project.objects.filter(created_by=self.request.user)
+        return qs
+
+

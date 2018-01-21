@@ -16,7 +16,10 @@ Including another URLconf
 
 from django.urls import path
 from doc_plan import views
+from django.views.generic import TemplateView
+
 
 urlpatterns = [
-    path('', views.home, name="home")
+    path('', TemplateView.as_view(template_name= 'landing/content.html')),
 ]
+
