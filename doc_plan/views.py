@@ -11,7 +11,7 @@ class ProjectListView(ListView):
     context_object_name = 'projects'
     template_name = 'projects.html'
 
-    @method_decorator(login_required)
+
     def get_queryset(self):
         qs = Project.objects.filter(created_by=self.request.user)
         return qs

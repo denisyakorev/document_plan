@@ -2,6 +2,11 @@
 {% load static %}
 {% load i18n %}
 
+{% block additional_styles %}
+  <link rel="stylesheet" href="{% static "/css/docplan.css" %}">
+{% endblock %}
+
+
 {% block content %}
 <!--Логин-->
   <section class="fdb-block full-center-height" >
