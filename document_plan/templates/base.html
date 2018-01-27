@@ -32,10 +32,9 @@
 <!--Футер-->
 {% include "footer.html" %}
 
+{% include "scripts.html" %}
 
-  <script src="{% static "/js/jquery-3.2.1.slim.min.js" %}"></script>
-  <script src="{% static "/js/popper.min.js" %}"></script>
-  <script src="{% static "/js/bootstrap.min.js" %}"></script>
-  {% block additional_scripts %}{% endblock %}
+{% block additional_scripts %}{% endblock %}
+
 </body>
 </html>
