@@ -1,17 +1,27 @@
-<div class="pagination">
-    <span class="step-links">
-        {% if qs.has_previous %}
-            <a href="?page=1">&laquo; first</a>
-            <a href="?page={{ qs.previous_page_number }}">previous</a>
-        {% endif %}
+{% load i18n %}
 
-        <span class="current">
-            Page {{ qs.number }} of {{ qs.paginator.num_pages }}.
-        </span>
+{% if is_paginated %}
+<nav aria-label="table pagination">
+  <ul class="pagination">
+    {% if page_obj.has_previous %}
+      <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}">{% trans "previous"|capfirst %}</a></li>
+    {% else %}
+     <li class="page-item disabled"><a class="page-link">{% trans "previous"|capfirst %}</a></li>
+    {% endif %}
+    {% for i in paginator.page_range %}
+      {% if page_obj.number == i %}
+        <li class="page-item active"><a class="page-link" href="#">{{ i }}<span class="sr-only">(current)</span></a></li>
+      {% else %}
+        <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+      {% endif %}
+    {% endfor %}
+    {% if page_obj.has_next %}
+        <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}">{% trans "next"|capfirst %}</a></li>
+    {% else %}
+      <li class="page-item disabled"><a class="page-link">{% trans "next"|capfirst %}</a></li>
+    {% endif %}
+  </ul>
+</nav>
+{% endif %}
 
-        {% if qs.has_next %}
-            <a href="?page={{ qs.next_page_number }}">next</a>
-            <a href="?page={{ qs.paginator.num_pages }}">last &raquo;</a>
-        {% endif %}
-    </span>
-</div>
+

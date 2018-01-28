@@ -1,16 +1,17 @@
-html, body {
-    height: 100%;
-    margin: 0;
-    padding: 0;
+html {
+  position: relative;
+  min-height: 100%;
 }
-
 body {
-	display : flex;
-	flex-direction: column;
-
+  /* Margin bottom by footer height */
+  margin-bottom: 101px;
 }
 
-.full-center-height{
-	flex-grow: 1;
-}
+footer {
+  position: absolute !important;
+  bottom: 0;
+  width: 100%;
+  /* Set the fixed height of the footer here */
+  height: 101px;
 
+}
