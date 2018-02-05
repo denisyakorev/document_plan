@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.template import loader, RequestContext
-from django.views.generic.list import View, ListView
+from django.views.generic.list import View, ListView, TemplateView
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 
@@ -20,9 +20,9 @@ class ProjectListView(ListView):
 
 
 
-class PlanView(View):
+class PlanView(TemplateView):
 
     def get(self, request):
-        pass
+        
 
 

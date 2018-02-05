@@ -22,7 +22,7 @@ from django.views.generic import TemplateView
 urlpatterns = [
     path('', TemplateView.as_view(template_name= 'landing/content.html')),
     path('new/', views.PlanView.as_view()),
-    path('<int:article_id>/view/', views.PlanView.as_view()),
-    path('<int:article_id>/edit/', views.PlanView.as_view()),
+    path('<int:plan_id>/view/', views.PlanView.as_view()),
+    path('<int:plan_id>/edit/', views.PlanView.as_view()),
 ]
 
