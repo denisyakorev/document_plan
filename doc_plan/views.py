@@ -1,7 +1,9 @@
 from django.shortcuts import render
 from django.template import loader, RequestContext
-from django.views.generic.list import View, ListView, TemplateView
+from django.views.generic.list import ListView
+from django.views.generic import TemplateView
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from doc_plan.utils import add_plan_data
 
 
 from doc_plan.models import Project
@@ -21,8 +23,11 @@ class ProjectListView(ListView):
 
 
 class PlanView(TemplateView):
+    template_name = 'landing/content.html'
 
-    def get(self, request):
-        
+    def get(self, request, **kwargs):
+        context = self.get_context_data(**kwargs)
+        context = add_plan_data(request, context)
+        return self.render_to_response(context)
 
 

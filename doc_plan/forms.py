@@ -17,8 +17,3 @@ class AuditoryForm(forms.Form):
     environment = forms.TextField()
     resume = forms.TextField()
 
-class
-
-
-    questions = models.ManyToManyField("Question", blank=True, verbose_name=_("questions"))
-    chapters = models.ManyToManyField("Chapter", blank=True, verbose_name=_("chapters"))
