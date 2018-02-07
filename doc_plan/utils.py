@@ -2,6 +2,7 @@
 
 from doc_plan.models import Project
 from django.http import Http404
+from django.forms.models import model_to_dict
 
 
 def add_plan_data(request, context):
@@ -11,16 +12,10 @@ def add_plan_data(request, context):
 
 	try:
 		plan = Project.objects.get(id = plan_id)
-		"""
-		context['plan_name'] = plan.name
-		context['aim_action'] = plan.aim_action
-		context['aim_auditory'] = plan.aim_auditory
-		context['aim_content'] = plan.aim_content
-		context['reaction_action'] = plan.reaction_action
-		"""
-		for k,v in plan:
-			context[k] = v
-		print(context)
+		plan_dict = model_to_dict(plan)
+		for key in plan_dict:
+			context[key] = plan_dict[key]
+		
 	except Project.DoesNotExist:
 		print ("Плана с id %s не существует" % plan_id)
 		raise Http404
