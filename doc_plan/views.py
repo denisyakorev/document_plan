@@ -11,8 +11,8 @@ from doc_plan.models import Project
 # Create your views here.
 class ProjectListView(ListView):
     model = Project
-    context_object_name = 'projects'
-    template_name = 'projects.html'
+    context_object_name = 'plans'
+    template_name = 'plan/plans.html'
     paginate_by = 2
 
 
@@ -23,11 +23,13 @@ class ProjectListView(ListView):
 
 
 class PlanView(TemplateView):
-    template_name = 'landing/content.html'
+	
+	template_name = 'plan/plan_view.html'
 
-    def get(self, request, **kwargs):
-        context = self.get_context_data(**kwargs)
-        context = add_plan_data(request, context)
-        return self.render_to_response(context)
+	def get_context_data(self, **kwargs):
+		context = super(PlanView, self).get_context_data(**kwargs)
+		context = add_plan_data(self.request, context)
+		print(context)
+		return context
 
 

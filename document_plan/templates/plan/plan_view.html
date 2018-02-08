@@ -1,0 +1,265 @@
+{% extends "base.html" %}
+{% load static %}
+{% load i18n %}
+
+{% block content %}
+
+ <!--Название, Цель, Реакция-->
+ <section class="fdb-block">
+    <div class="container">
+     <div class="row">
+        <div class="col text-left">
+          <h2 contenteditable="true">{{name}}</h2>
+        </div>
+      </div>
+      <div class="row-50"></div>
+      <div class="row">
+        <div class="col text-left">
+          <h3><strong>(Моя цель) Чего я хочу добиться при помощи документа:</strong></h3>
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th>Причина</th>
+                <th>Аудитория</th>
+                <th>Содержание</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="editor">научить</td>
+                <td>новых сотрудников Donut King</td>
+                <td>технологиям и стандартам качества для приготовления пончиков</td>
+              </tr>                           
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="row-50"></div>
+      <div class="row">
+        <div class="col text-left">
+          <h3><strong>(Реакция) Я хочу, чтобы моя аудитория:</strong></h3>
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th>Действие</th>
+                <th>Стандарт</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>делала пончики</td>
+                <td>
+                  <ul>
+                    <li>в соответствии со стандартами качества</li>
+                    <li>в достаточном количестве</li>
+                    <li>с минимальным контролем</li>
+                  </ul>
+                </td>
+              </tr>                           
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  
+  <!--Целевая аудитория-->
+  <section class="fdb-block">
+    <div class="container">
+      <div class="row">
+        <div class="col text-left">
+          <h2>Целевая аудитория</h2>
+        </div>
+      </div>
+      <div class="row-100"></div>
+
+      <div class="row text-left">
+        <div class="col-sm-12">
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th>Характеристики аудитории</th>
+                <th>Описание</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Трудовые обязанности</td>
+                <td class="editor-with-headings">
+                  <ul>
+                    <li>Какие должности они занимают?</li>
+                    <li>Каковы их трудовые обязанности?</li>
+                  </ul>
+                </td>
+              </tr>
+              <tr>
+                <td>Знание предмета</td>
+                <td>
+                  <ul>
+                    <li>Что они уже знают о предмете обучения?</li>
+                    <li>Что им надо узнать о предмете обучения?</li>
+                    <li>Какой опыт они имеют в отношении предмета обучения на своей работе?</li>
+                   </ul>
+                </td>
+              </tr>
+              <tr>
+                <td>Демография</td>
+                <td>
+                  <ul>
+                    <li>Каков их уровень образования?</li>
+                    <li>Каков их родной язык?</li>
+                  </ul>
+                </td>
+              </tr>
+              <tr>
+                <td>Отношение</td>
+                <td>
+                  <ul>
+                    <li>Каково их отношение к документации?</li>
+                    <li>Каково их отношение к предмету обучения?</li>
+                    <li>Каково их отношение к использованию технологии?</li>
+                  </ul>
+                </td>
+              </tr> 
+              <tr>
+                <td>Рабочая среда</td>
+                <td>
+                  <ul>
+                    <li>Удобно ли организовано получение ими информации из сети Интернет?</li>
+                    <li>Как они хранят свои печатные источники информации?</li>
+                    <li>Как они будут использовать информацию?</li>
+                    <li>Сколько времени у них есть на прочтение документации?</li>
+                  </ul>
+                </td>
+              </tr>                               
+            </tbody>
+          </table>
+        </div>
+      </div>
+     
+    </div>
+  </section>
+
+
+  <!--Пользовательские вопросы-->
+  <section class="fdb-block">
+    <div class="container">
+      <div class="row">
+        <div class="col text-left">
+          <h2>Пользовательские вопросы</h2>
+        </div>
+      </div>
+      <div class="row-100"></div>
+
+      <div class="row text-left">
+        <div class="col-sm-12">
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th>Делать</th>
+                <th>Знать</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Что пользователи должны делать?</td>
+                <td>
+                  Что пользователи должны для этого знать?
+                </td>
+              </tr>
+                                         
+            </tbody>
+          </table>
+        </div>
+      </div>
+     
+    </div>
+  </section>
+
+
+  <!--Разбивка по разделам-->
+  <section class="fdb-block">
+    <div class="container">
+      <div class="row">
+        <div class="col text-left">
+          <h2>Разделы документа</h2>
+        </div>
+      </div>
+      <div class="row-100"></div>
+
+      <div class="row text-left">
+        <div class="col-sm-12">
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th>Название</th>
+                <th>Вопросы</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Название раздела</td>
+                <td>Пользовательские вопросы</td>
+              </tr>
+                                         
+            </tbody>
+          </table>
+        </div>
+      </div>
+     
+    </div>
+  </section>
+
+  
+
+  <!--Футер-->
+  <footer class="fdb-block footer-small bg-dark">
+    <div class="container">
+      <div class="row text-center align-items-center">
+        <div class="col-12 col-sm-6 col-md-4 text-sm-left">
+          <img alt="image" src="./imgs/logo.png" height="40">
+        </div>
+
+        <div class="col-12 col-sm-6 col-md-4 mt-4 mt-sm-0 text-center text-sm-right text-md-center">
+          &copy; 2018 Document Plan
+        </div>
+
+        <div class="col-12 col-md-4 mt-4 mt-md-0 text-center text-md-right">
+          <a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a>&nbsp;&nbsp;
+          <a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a>&nbsp;&nbsp;
+          
+        </div>
+      </div>
+    </div>
+  </footer>
+
+
+  <script src="./js/jquery-3.2.1.slim.min.js"></script>
+  <script src="./js/popper.min.js"></script>
+  <script src="./js/bootstrap.min.js"></script>
+  <script src="./js/ckeditor5-inline/ckeditor.js"></script>
+  <script>
+    InlineEditor
+        .create( document.querySelector( '.editor' ) , {
+        removePlugins: [ 'Heading', 'Link' ],
+        toolbar: [ 'bold', 'italic', 'bulletedList', 'numberedList' ]
+    })
+        .catch( error => {
+            console.error( error );
+        } );
+
+     InlineEditor
+        .create( document.querySelector( '.editor-with-headings' ) , {
+        removePlugins: [ 'Link' ],
+        toolbar: [ 'headings', 'bold', 'italic', 'bulletedList', 'numberedList' ]
+    })
+        .catch( error => {
+            console.error( error );
+        } );
+
+  </script>
+</body>
+</html>
+
+{% endblock %}

@@ -34,14 +34,14 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {% for project in object_list %}
+                                    {% for plan in object_list %}
                                         {% if forloop.counter|divisibleby:"2" %}
                                             <tr class="odd">
                                         {% else %}
                                             <tr class="even">
                                         {% endif %}
-                                                <td>{{ project.name }}</td>
-                                                <td>{{ project.created_at|date:"j F Y" }}</td>
+                                                <td><a href="/docplan/{{plan.id}}/view/">{{ plan.name }}</td>
+                                                <td>{{ plan.created_at|date:"j F Y" }}</td>
 
                                             </tr>
 
@@ -54,7 +54,7 @@
                         </div>
                         <!-- /.panel-body -->
 
-                        {% include "projects/paginator.html" %}
+                        {% include "plan/paginator.html" %}
                     </div>
                     <!-- /.panel -->
 
