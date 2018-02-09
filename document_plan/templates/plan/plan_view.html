@@ -26,9 +26,9 @@
             </thead>
             <tbody>
               <tr>
-                <td class="editor">научить</td>
-                <td>новых сотрудников Donut King</td>
-                <td>технологиям и стандартам качества для приготовления пончиков</td>
+                <td class="editor">{{aim_action}}</td>
+                <td>{{aim_auditory|safe}}</td>
+                <td>{{aim_content|safe}}</td>
               </tr>                           
             </tbody>
           </table>
@@ -47,13 +47,9 @@
             </thead>
             <tbody>
               <tr>
-                <td>делала пончики</td>
+                <td>{{reaction_action|safe}}</td>
                 <td>
-                  <ul>
-                    <li>в соответствии со стандартами качества</li>
-                    <li>в достаточном количестве</li>
-                    <li>с минимальным контролем</li>
-                  </ul>
+                  {{reaction_standart|safe}}
                 </td>
               </tr>                           
             </tbody>
@@ -69,7 +65,7 @@
     <div class="container">
       <div class="row">
         <div class="col text-left">
-          <h2>Целевая аудитория</h2>
+          <h2>Целевая аудитория: {{auditory.name}}</h2>
         </div>
       </div>
       <div class="row-100"></div>
@@ -87,52 +83,39 @@
               <tr>
                 <td>Трудовые обязанности</td>
                 <td class="editor-with-headings">
-                  <ul>
-                    <li>Какие должности они занимают?</li>
-                    <li>Каковы их трудовые обязанности?</li>
-                  </ul>
+                  {{auditory.duty|safe}}
                 </td>
               </tr>
               <tr>
                 <td>Знание предмета</td>
                 <td>
-                  <ul>
-                    <li>Что они уже знают о предмете обучения?</li>
-                    <li>Что им надо узнать о предмете обучения?</li>
-                    <li>Какой опыт они имеют в отношении предмета обучения на своей работе?</li>
-                   </ul>
+                  {{auditory.knowledge|safe}}
                 </td>
               </tr>
               <tr>
                 <td>Демография</td>
                 <td>
-                  <ul>
-                    <li>Каков их уровень образования?</li>
-                    <li>Каков их родной язык?</li>
-                  </ul>
+                  {{auditory.demography|safe}}
                 </td>
               </tr>
               <tr>
                 <td>Отношение</td>
                 <td>
-                  <ul>
-                    <li>Каково их отношение к документации?</li>
-                    <li>Каково их отношение к предмету обучения?</li>
-                    <li>Каково их отношение к использованию технологии?</li>
-                  </ul>
+                  {{auditory.relations|safe}}
                 </td>
               </tr> 
               <tr>
                 <td>Рабочая среда</td>
                 <td>
-                  <ul>
-                    <li>Удобно ли организовано получение ими информации из сети Интернет?</li>
-                    <li>Как они хранят свои печатные источники информации?</li>
-                    <li>Как они будут использовать информацию?</li>
-                    <li>Сколько времени у них есть на прочтение документации?</li>
-                  </ul>
+                  {{auditory.environment|safe}}
                 </td>
-              </tr>                               
+              </tr>
+              <tr>
+                <td>Выводы</td>
+                <td>
+                  {{auditory.resume|safe}}
+                </td>
+              </tr>
             </tbody>
           </table>
         </div>

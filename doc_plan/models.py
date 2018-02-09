@@ -11,7 +11,7 @@ class Project(models.Model):
     aim_content = models.TextField(blank=True, verbose_name=_("aim_content"))
     reaction_action = models.TextField(blank=True, verbose_name=_("reaction_action"))
     reaction_standart = models.TextField(blank=True, verbose_name=_("reaction_standart"))
-    auditory_profiles = models.ManyToManyField("AuditoryProfile", blank=True, verbose_name=_("auditory_profiles"))
+    auditory_profile = models.ForeignKey("AuditoryProfile", on_delete=models.SET_NULL, blank=True, null=True, verbose_name=_("auditory_profiles"))
     questions = models.ManyToManyField("Question", blank=True, verbose_name=_("questions"))
     chapters = models.ManyToManyField("Chapter", blank=True, verbose_name=_("chapters"))
     created_at = models.DateField(auto_now_add=True)
