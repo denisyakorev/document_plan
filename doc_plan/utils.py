@@ -11,16 +11,30 @@ def add_plan_data(request, context):
 	plan_id = context['plan_id']
 
 	try:
+		#add plan data
 		plan = Project.objects.get(id = plan_id)
 		plan_dict = model_to_dict(plan)
 		for key in plan_dict:
 			context[key] = plan_dict[key]
 
+		#add auditory_profile data to context
 		if plan.auditory_profile:
 			auditory_dict = model_to_dict(plan.auditory_profile)
 			context['auditory'] = {}
 			for key in auditory_dict:
 				context['auditory'][key] = auditory_dict[key]
+
+		#add chapters data
+		context['chapters'] = []
+		for chapter in plan.chapters.all():
+			cur_chapter_dict = {}
+			cur_chapter = model_to_dict(chapter)
+			for key in cur_chapter:
+				cur_chapter_dict[key] = cur_chapter[key]
+
+			context['chapters'].append(cur_chapter_dict)
+
+
 
 	except Project.DoesNotExist:
 		print ("Плана с id %s не существует" % plan_id)

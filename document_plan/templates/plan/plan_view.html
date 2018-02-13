@@ -146,9 +146,9 @@
             </thead>
             <tbody>
               <tr>
-                <td>Что пользователи должны делать?</td>
+                <td>{{question_actions|safe}}</td>
                 <td>
-                  Что пользователи должны для этого знать?
+                  {{question_knowledges|safe}}
                 </td>
               </tr>
                                          
@@ -181,10 +181,12 @@
               </tr>
             </thead>
             <tbody>
+              {% for chapter in chapters %}
               <tr>
-                <td>Название раздела</td>
-                <td>Пользовательские вопросы</td>
+                <td>{{chapter.name}}</td>
+                <td>{{chapter.questions|safe}}</td>
               </tr>
+              {% endfor %}
                                          
             </tbody>
           </table>

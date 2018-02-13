@@ -12,7 +12,8 @@ class Project(models.Model):
     reaction_action = models.TextField(blank=True, verbose_name=_("reaction_action"))
     reaction_standart = models.TextField(blank=True, verbose_name=_("reaction_standart"))
     auditory_profile = models.ForeignKey("AuditoryProfile", on_delete=models.SET_NULL, blank=True, null=True, verbose_name=_("auditory_profiles"))
-    questions = models.ManyToManyField("Question", blank=True, verbose_name=_("questions"))
+    question_actions = models.TextField(blank=True, verbose_name=_("question_actions"))
+    question_knowledges = models.TextField(blank=True, verbose_name=_("question_knowledges"))
     chapters = models.ManyToManyField("Chapter", blank=True, verbose_name=_("chapters"))
     created_at = models.DateField(auto_now_add=True)
     created_by = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -41,25 +42,6 @@ class AuditoryProfile(models.Model):
     class Meta:
         verbose_name = _("auditory")
         verbose_name_plural = _("auditories")
-
-
-class Question(models.Model):
-    ACTION = "a"
-    KNOWLEDGE = "k"
-    TYPES_CHOISES = (
-        (ACTION, "action"),
-        (KNOWLEDGE, "knowledge"),
-    )
-
-    text = models.TextField(verbose_name=_("question_text"))
-    question_type = models.CharField(max_length=2, choices=TYPES_CHOISES, default=ACTION)
-
-    def __unicode__(self):
-        return self.text[0:30]+"..."
-
-    class Meta:
-        verbose_name = _("question")
-        verbose_name_plural = _("questions")
 
 
 class Chapter(models.Model):
