@@ -65,7 +65,7 @@
     <div class="container">
       <div class="row">
         <div class="col text-left">
-          <h2>Целевая аудитория: {{auditory.name}}</h2>
+          <h2>Целевая аудитория</h2>
         </div>
       </div>
       <div class="row-100"></div>
@@ -75,45 +75,45 @@
           <table class="table table-bordered">
             <thead>
               <tr>
-                <th>Характеристики аудитории</th>
-                <th>Описание</th>
+                <th style="width:30%">Характеристики аудитории</th>
+                <th style="width:70%">Описание</th>
               </tr>
             </thead>
             <tbody>
               <tr>
                 <td>Трудовые обязанности</td>
                 <td class="editor-with-headings">
-                  {{auditory.duty|safe}}
+                  {{auditory_duty|safe}}
                 </td>
               </tr>
               <tr>
                 <td>Знание предмета</td>
                 <td>
-                  {{auditory.knowledge|safe}}
+                  {{auditory_knowledge|safe}}
                 </td>
               </tr>
               <tr>
                 <td>Демография</td>
                 <td>
-                  {{auditory.demography|safe}}
+                  {{auditory_demography|safe}}
                 </td>
               </tr>
               <tr>
                 <td>Отношение</td>
                 <td>
-                  {{auditory.relations|safe}}
+                  {{auditory_relations|safe}}
                 </td>
               </tr> 
               <tr>
                 <td>Рабочая среда</td>
                 <td>
-                  {{auditory.environment|safe}}
+                  {{auditory_environment|safe}}
                 </td>
               </tr>
               <tr>
                 <td>Выводы</td>
                 <td>
-                  {{auditory.resume|safe}}
+                  {{auditory_resume|safe}}
                 </td>
               </tr>
             </tbody>
@@ -195,56 +195,5 @@
      
     </div>
   </section>
-
-  
-
-  <!--Футер-->
-  <footer class="fdb-block footer-small bg-dark">
-    <div class="container">
-      <div class="row text-center align-items-center">
-        <div class="col-12 col-sm-6 col-md-4 text-sm-left">
-          <img alt="image" src="./imgs/logo.png" height="40">
-        </div>
-
-        <div class="col-12 col-sm-6 col-md-4 mt-4 mt-sm-0 text-center text-sm-right text-md-center">
-          &copy; 2018 Document Plan
-        </div>
-
-        <div class="col-12 col-md-4 mt-4 mt-md-0 text-center text-md-right">
-          <a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a>&nbsp;&nbsp;
-          <a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a>&nbsp;&nbsp;
-          
-        </div>
-      </div>
-    </div>
-  </footer>
-
-
-  <script src="./js/jquery-3.2.1.slim.min.js"></script>
-  <script src="./js/popper.min.js"></script>
-  <script src="./js/bootstrap.min.js"></script>
-  <script src="./js/ckeditor5-inline/ckeditor.js"></script>
-  <script>
-    InlineEditor
-        .create( document.querySelector( '.editor' ) , {
-        removePlugins: [ 'Heading', 'Link' ],
-        toolbar: [ 'bold', 'italic', 'bulletedList', 'numberedList' ]
-    })
-        .catch( error => {
-            console.error( error );
-        } );
-
-     InlineEditor
-        .create( document.querySelector( '.editor-with-headings' ) , {
-        removePlugins: [ 'Link' ],
-        toolbar: [ 'headings', 'bold', 'italic', 'bulletedList', 'numberedList' ]
-    })
-        .catch( error => {
-            console.error( error );
-        } );
-
-  </script>
-</body>
-</html>
 
 {% endblock %}

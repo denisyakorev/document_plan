@@ -17,13 +17,6 @@ def add_plan_data(request, context):
 		for key in plan_dict:
 			context[key] = plan_dict[key]
 
-		#add auditory_profile data to context
-		if plan.auditory_profile:
-			auditory_dict = model_to_dict(plan.auditory_profile)
-			context['auditory'] = {}
-			for key in auditory_dict:
-				context['auditory'][key] = auditory_dict[key]
-
 		#add chapters data
 		context['chapters'] = []
 		for chapter in plan.chapters.all():
@@ -40,11 +33,6 @@ def add_plan_data(request, context):
 		print ("Плана с id %s не существует" % plan_id)
 		raise Http404
 
-
-
-
-
-	print(context)
 	return context
 
 
