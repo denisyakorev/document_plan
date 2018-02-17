@@ -1,0 +1,36 @@
+{% load i18n %}
+
+  <!--Разбивка по разделам-->
+  <section class="fdb-block">
+    <div class="container">
+      <div class="row">
+        <div class="col text-left">
+          <h2>{% trans 'Разделы документа' %}</h2>
+        </div>
+      </div>
+      <div class="row-100"></div>
+
+      <div class="row text-left">
+        <div class="col-sm-12">
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th>{% trans 'Название' %}</th>
+                <th>{% trans 'Вопросы' %}</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for chapter in chapters %}
+              <tr>
+                <td>{{chapter.name}}</td>
+                <td>{{chapter.questions|safe}}</td>
+              </tr>
+              {% endfor %}
+
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  </section>

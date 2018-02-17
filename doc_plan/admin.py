@@ -12,6 +12,7 @@ class ProjectAdmin(admin.ModelAdmin):
 		(_('Аудитория'), 		{'fields': ['auditory_duty', 'auditory_knowledge', 'auditory_demography', 'auditory_relations', 'auditory_environment', 'auditory_resume']}),
 		(_('Вопросы'), 			{'fields': ['question_actions', 'question_knowledges']}),
 		(_('Разделы'), 			{'fields': ['chapters']}),
+		(_('Служебная информация'), {'fields': ['created_by']}),
 	]
 
 

@@ -1,0 +1,27 @@
+{% load i18n %}
+
+<div class="bg-primary">
+   <div class="container">
+     <div class="row">
+         <div class="col">
+             <ul class="nav justify-content-start">
+                <li class="nav-item">
+                  <a class="nav-link color-white" href="#">{% trans 'Скачать' %}</a>
+                </li>
+
+          </ul>
+         </div>
+         {% ifequal user.id created_by %}
+            <div class="col">
+              <ul class="nav justify-content-end">
+                <li class="nav-item">
+                  <a class="nav-link color-white" href="#">{% trans 'Изменить' %}</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link color-white" href="#">{% trans 'Удалить' %}</a>
+                </li>
+              </ul>
+            </div>
+         {% endifequal %}
+     </div>
+</div>
