@@ -24,6 +24,6 @@ urlpatterns = [
     path('new/', views.PlanView.as_view()),
     path('<int:plan_id>/view/', views.PlanView.as_view()),
     path('<int:plan_id>/edit/', views.PlanView.as_view()),
-    path('<int:plan_id>/download/', views.PdfView.as_view()),
+    path('<int:plan_id>/download/', views.make_pdf),
 ]
 
