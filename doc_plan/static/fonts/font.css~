@@ -74,7 +74,8 @@
   font-style: normal;
   font-weight: 400;
        url('../fonts/RobotoCondensed-Regular.ttf') format('truetype'), /* Safari, Android, iOS */
-       
+       url('../fonts/roboto-v18-latin_cyrillic_cyrillic-ext-regular.svg#Roboto') format('svg'); /* Legacy iOS */
+}
 
 /* roboto-500 - latin_cyrillic_cyrillic-ext */
 @font-face {

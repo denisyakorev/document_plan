@@ -1,0 +1,313 @@
+{% load static %}
+{% load i18n %}
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Document Plan</title>
+  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0" />
+  <meta charset="utf-8">
+
+
+  <link rel="stylesheet" href="{% static '/css/css/pdf_style.css' %}">
+    <link href="{% static '/fonts/font.css' %}" rel="stylesheet">
+
+    <style>
+       /* Page Breaks */
+
+/***Always insert a page break before the element***/
+       .pb_before {
+           page-break-before: always !important;
+       }
+
+/***Always insert a page break after the element***/
+       .pb_after {
+           page-break-after: always !important;
+       }
+
+/***Avoid page break before the element (if possible)***/
+       .pb_before_avoid {
+           page-break-before: avoid !important;
+       }
+
+/***Avoid page break after the element (if possible)***/
+       .pb_after_avoid {
+           page-break-after: avoid !important;
+       }
+
+/* Avoid page break inside the element (if possible) */
+       .pbi_avoid {
+           page-break-inside: avoid !important;
+       }
+
+
+
+/* Page styles */
+body{
+
+    font-family: Roboto Condensed, Roboto;
+}
+
+th {
+    background-color: #343A40;
+    color: white;
+    text-align: center;
+}
+
+.table thead th {
+    vertical-align: bottom;
+    border-bottom: 2px solid #e9ecef;
+}
+
+table {
+    border-collapse: collapse;
+}
+
+.table-bordered td, .table-bordered th {
+    border: 1px solid #e9ecef;
+}
+
+.table td, .table th {
+    padding: .75rem;
+    vertical-align: top;
+
+}
+
+.page{
+
+    font-family: Roboto Condensed, Roboto;
+}
+
+
+.header{
+    background-color: #343A40;
+    min-height: 20mm;
+}
+
+.footer{
+    background-color: #343A40;
+    min-height: 20mm;
+}
+
+.content{
+    height: 237mm;
+    width: 190mm;
+    padding: 0 30px 20px 30px;
+}
+
+.title{
+    text-align: center;
+    vertical-align: middle;
+    padding-top: 50px;
+}
+
+.header-title{
+    color: white;
+    font-size: 32px;
+    padding:10px 0 0 15px;
+}
+
+
+.table{
+    width: 100%;
+}
+
+</style>
+
+</head>
+
+<body>
+    <div class="page pb_after">
+        <div class="header">
+            <div class="logo">
+              <a href="#">
+                <img src="{% static "/imgs/logo.png" %}" height="60" alt="image">
+              </a>
+            </div>
+        </div>
+
+        <div class="content title">
+            <div class="title-placeholder">
+                <h1>{{name}}</h1>
+            </div>
+
+        </div>
+    </div>
+
+
+
+    <div class="page pb_after">
+            <div class="header">
+            <div class="header-title">
+              {% trans '1. Общие сведения' %}
+            </div>
+        </div>
+
+        <div class="content">
+            <h2>{% trans 'Цель документа:' %}</h2>
+            <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th width="30%">{% trans 'Причина' %}</th>
+                <th width="30%">{% trans 'Аудитория' %}</th>
+                <th width="40%">{% trans 'Содержание' %}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="editor">{{aim_action}}</td>
+                <td>{{aim_auditory|safe}}</td>
+                <td>{{aim_content|safe}}</td>
+              </tr>
+            </tbody>
+          </table>
+            <h2>{% trans 'Желаемая реакция аудитории:' %}</h2>
+            <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th width="50%">{% trans 'Действие' %}</th>
+                <th width="50%">{% trans 'Стандарт' %}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>{{reaction_action|safe}}</td>
+                <td>
+                  {{reaction_standart|safe}}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+    </div>
+
+
+
+    <div class="page pb_after">
+            <div class="header">
+            <div class="header-title">
+              {% trans '2. Целевая аудитория' %}
+            </div>
+        </div>
+
+        <div class="content">
+            <h2>{% trans 'Характеристика целевой аудитории:' %}</h2>
+            <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th width="30%">{% trans 'Характеристики' %}</th>
+                <th width="70%">{% trans 'Описание' %}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>{% trans 'Трудовые обязанности' %}</td>
+                <td class="editor-with-headings">
+                  {{auditory_duty|safe}}
+                </td>
+              </tr>
+              <tr>
+                <td>{% trans 'Знание предмета' %}</td>
+                <td>
+                  {{auditory_knowledge|safe}}
+                </td>
+              </tr>
+              <tr>
+                <td>{% trans 'Демография' %}</td>
+                <td>
+                  {{auditory_demography|safe}}
+                </td>
+              </tr>
+              <tr>
+                <td>{% trans 'Отношение' %}</td>
+                <td>
+                  {{auditory_relations|safe}}
+                </td>
+              </tr>
+              <tr>
+                <td>{% trans 'Рабочая среда' %}</td>
+                <td>
+                  {{auditory_environment|safe}}
+                </td>
+              </tr>
+              <tr>
+                <td>{% trans 'Выводы' %}</td>
+                <td>
+                  {{auditory_resume|safe}}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+    </div>
+
+
+
+    <div class="page pb_after">
+            <div class="header">
+            <div class="header-title">
+              {% trans '3. Пользовательские вопросы' %}
+            </div>
+        </div>
+
+        <div class="content">
+            <h2>{% trans 'Пользовательские вопросы:' %}</h2>
+            <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th>{% trans 'Делать' %}</th>
+                <th>{% trans 'Знать' %}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>{{question_actions|safe}}</td>
+                <td>
+                  {{question_knowledges|safe}}
+                </td>
+              </tr>
+
+            </tbody>
+          </table>
+        </div>
+    </div>
+
+
+
+
+    <div class="page">
+            <div class="header">
+            <div class="header-title">
+              {% trans '4. Разделы документа' %}
+            </div>
+        </div>
+
+        <div class="content">
+            <h2>{% trans 'Разделы документа:' %}</h2>
+             <table class="table table-bordered">
+                <thead>
+                  <tr>
+                    <th>{% trans 'Название' %}</th>
+                    <th>{% trans 'Вопросы' %}</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for chapter in chapters %}
+                  <tr>
+                    <td>{{chapter.name}}</td>
+                    <td>{{chapter.questions|safe}}</td>
+                  </tr>
+                  {% endfor %}
+
+                </tbody>
+              </table>
+        </div>
+    </div>
+
+
+
+
+</body>
+</html>
+
+
