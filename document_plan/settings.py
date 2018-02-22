@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 
 import os
 
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -40,6 +41,8 @@ INSTALLED_APPS = [
     'doc_plan',
     'accounts',
     'wkhtmltopdf',
+    'ckeditor',
+    'precise_bbcode',
 ]
 
 MIDDLEWARE = [
@@ -125,5 +128,46 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
+
+
+
+#CKEDITOR CONFIG
+
+
+CKEDITOR_CONFIGS = {
+    'default': {
+        'toolbar': 'Custom',
+        'toolbar_Custom': [
+            ['Bold', 'Italic'],
+            ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent'],
+            ['Source']
+        ],
+        'height': 200,
+        'width': 520,
+        'extraPlugins': 'bbcode'
+    },
+    'short': {
+        'toolbar': 'Short',
+        'toolbar_Short': [
+            ['Bold', 'Italic'],
+            ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent'],
+            ['Source']
+        ],
+        'height': 150,
+        'width': 340,
+        'extraPlugins': 'bbcode'
+    },
+    'wide': {
+        'toolbar': 'Short',
+        'toolbar_Short': [
+            ['Bold', 'Italic'],
+            ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent'],
+            ['Source']
+        ],
+        'height': 200,
+        'width': 740,
+        'extraPlugins': 'bbcode'
+    }
+}
 
 

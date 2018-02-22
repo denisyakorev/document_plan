@@ -1,12 +1,18 @@
 {% load static %}
 {% load i18n %}
+{% load bbcode_tags %}
 
 <!--Название, Цель, Реакция-->
  <section class="fdb-block">
     <div class="container">
      <div class="row">
         <div class="col text-left">
-          <h2 contenteditable="true">{{name}}</h2>
+          {% if edit %}
+          <h2>{% trans 'Название:' %}</h2>
+            {{plan.name}}
+          {% else %}
+            <h2>{{plan.name}}</h2>
+          {% endif %}
         </div>
       </div>
       <div class="row-50"></div>
@@ -22,11 +28,19 @@
               </tr>
             </thead>
             <tbody>
+            {% if edit %}
               <tr>
-                <td class="editor">{{aim_action}}</td>
-                <td>{{aim_auditory|safe}}</td>
-                <td>{{aim_content|safe}}</td>
+                <td>{{plan.aim_action}}</td>
+                <td>{{plan.aim_auditory}}</td>
+                <td>{{plan.aim_content}}</td>
               </tr>
+            {% else %}
+              <tr>
+                <td>{{plan.aim_action|bbcode|safe}}</td>
+                <td>{{plan.aim_auditory|bbcode|safe}}</td>
+                <td>{{plan.aim_content|bbcode|safe}}</td>
+              </tr>
+            {% endif %}
             </tbody>
           </table>
         </div>
@@ -43,12 +57,17 @@
               </tr>
             </thead>
             <tbody>
+              {% if edit %}
               <tr>
-                <td>{{reaction_action|safe}}</td>
-                <td>
-                  {{reaction_standart|safe}}
-                </td>
+                <td>{{plan.reaction_action}}</td>
+                <td>{{plan.reaction_standart}}</td>
               </tr>
+              {% else %}
+              <tr>
+                <td>{{plan.reaction_action|bbcode|safe}}</td>
+                <td>{{plan.reaction_standart|bbcode|safe}}</td>
+              </tr>
+            {% endif %}
             </tbody>
           </table>
         </div>
@@ -79,40 +98,52 @@
             <tbody>
               <tr>
                 <td>{% trans 'Трудовые обязанности' %}</td>
-                <td class="editor-with-headings">
-                  {{auditory_duty|safe}}
-                </td>
+                {% if edit %}
+                 <td>{{plan.auditory_duty}}</td>
+                {% else %}
+                <td>{{plan.auditory_duty|bbcode|safe}}</td>
+                {% endif %}
               </tr>
               <tr>
                 <td>{% trans 'Знание предмета' %}</td>
-                <td>
-                  {{auditory_knowledge|safe}}
-                </td>
+                {% if edit %}
+                 <td>{{plan.auditory_knowledge}}</td>
+                {% else %}
+                <td>{{plan.auditory_knowledge|bbcode|safe}}</td>
+                {% endif %}
               </tr>
               <tr>
                 <td>{% trans 'Демография' %}</td>
-                <td>
-                  {{auditory_demography|safe}}
-                </td>
-              </tr>
+                {% if edit %}
+                 <td>{{plan.auditory_demography}}</td>
+                {% else %}
+                <td>{{plan.auditory_demography|bbcode|safe}}</td>
+                {% endif %}
+               </tr>
               <tr>
                 <td>{% trans 'Отношение' %}</td>
-                <td>
-                  {{auditory_relations|safe}}
-                </td>
-              </tr>
+                {% if edit %}
+                 <td>{{plan.auditory_relations}}</td>
+                {% else %}
+                <td>{{plan.auditory_relations|bbcode|safe}}</td>
+                {% endif %}
+               </tr>
               <tr>
                 <td>{% trans 'Рабочая среда' %}</td>
-                <td>
-                  {{auditory_environment|safe}}
-                </td>
-              </tr>
+                {% if edit %}
+                 <td>{{plan.auditory_environment}}</td>
+                {% else %}
+                <td>{{plan.auditory_environment|bbcode|safe}}</td>
+                {% endif %}
+                </tr>
               <tr>
                 <td>{% trans 'Выводы' %}</td>
-                <td>
-                  {{auditory_resume|safe}}
-                </td>
-              </tr>
+                {% if edit %}
+                 <td>{{plan.auditory_resume}}</td>
+                {% else %}
+                <td>{{plan.auditory_resume|bbcode|safe}}</td>
+                {% endif %}
+               </tr>
             </tbody>
           </table>
         </div>
@@ -143,10 +174,14 @@
             </thead>
             <tbody>
               <tr>
-                <td>{{question_actions|safe}}</td>
-                <td>
-                  {{question_knowledges|safe}}
-                </td>
+                {% if edit %}
+                <td>{{plan.question_actions}}</td>
+                <td>{{plan.question_knowledges}}</td>
+                {% else %}
+                <td>{{plan.question_actions|bbcode|safe}}</td>
+                <td>{{plan.question_knowledges|bbcode|safe}}</td>
+                {% endif %}
+
               </tr>
 
             </tbody>

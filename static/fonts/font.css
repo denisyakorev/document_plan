@@ -68,6 +68,14 @@
        url('../fonts/roboto-v18-latin_cyrillic_cyrillic-ext-regular.svg#Roboto') format('svg'); /* Legacy iOS */
 }
 
+/* roboto-regular-condensed - latin_cyrillic_cyrillic-ext */
+@font-face {
+  font-family: 'Roboto Condensed';
+  font-style: normal;
+  font-weight: 400;
+       url('../fonts/RobotoCondensed-Regular.ttf') format('truetype'), /* Safari, Android, iOS */
+       
+
 /* roboto-500 - latin_cyrillic_cyrillic-ext */
 @font-face {
   font-family: 'Roboto';

@@ -1,0 +1,28 @@
+html {
+  position: relative;
+  min-height: 100%;
+}
+body {
+  /* Margin bottom by footer height */
+  margin-bottom: 101px;
+}
+
+footer {
+  position: absolute !important;
+  bottom: 0;
+  width: 100%;
+  /* Set the fixed height of the footer here */
+  height: 101px;
+}
+
+th{
+	background-color: #343A40;
+	color: white;
+	text-align: center;
+}
+
+
+.color-white {
+    color: white;
+}
+

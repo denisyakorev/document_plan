@@ -17,15 +17,15 @@ Including another URLconf
 from django.urls import path
 from doc_plan import views
 from django.views.generic import TemplateView
+from django.contrib.auth.decorators import login_required
 
 
 
 urlpatterns = [
     path('', TemplateView.as_view(template_name= 'landing/content.html')),
-    path('new/', views.PlanView.as_view()),
     path('<int:plan_id>/view/', views.PlanView.as_view()),
-    path('<int:plan_id>/edit/', views.PlanView.as_view()),
+    path('<str:plan_id>/edit/', login_required(views.plan_edit)),
     path('<int:plan_id>/download/', views.PlanPDF.as_view()),
-    path('<int:plan_id>/view_pdf/', views.PlanPdfView.as_view()),
+    #path('<int:plan_id>/view_pdf/', views.PlanPdfView.as_view()),
 ]
 
