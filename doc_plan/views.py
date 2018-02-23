@@ -67,7 +67,8 @@ def plan_edit(request, plan_id):
                 plan_form = PlanForm(instance=project)
                 chapter_forms = []
                 for each in chapters:
-                    chapter_forms.append(ChapterForm(instance=each))
+                    #chapter_forms.append(ChapterForm(instance=each))
+                    chapter_forms.append(each)
 
             except Project.DoesNotExist:
                 raise Http404("Plan does not exist")
@@ -75,7 +76,7 @@ def plan_edit(request, plan_id):
         context = {
                     'edit': True,
                     'plan': plan_form,
-                    'chapter': chapter_forms
+                    'chapters': chapter_forms
                    }
         print (context)
         return render_to_response('plan/plan_edit.html', context)

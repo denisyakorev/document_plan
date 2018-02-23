@@ -56,3 +56,7 @@ class ChapterForm(ModelForm):
     class Meta:
         model = Chapter
         fields = ['name', 'questions']
+
+        widgets = {
+            'questions': CKEditorWidget(config_name='default'),
+        }

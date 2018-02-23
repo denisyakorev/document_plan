@@ -10,9 +10,47 @@
       </div>
       <div class="row-100"></div>
 
+      {% if edit %}
+      <div class="row table-management-panel">
+        <div class="col-sm-12">
+          <button id="add_row_btn" class="btn">{% trans 'добавить'|capfirst %}</button>
+          <a class="btn btn-danger" style="display:none" href="#">{% trans 'удалить'|capfirst %}</a>
+        </div>
+      </div>
       <div class="row text-left">
         <div class="col-sm-12">
-          <table class="table table-bordered">
+            <table id="chapters_table" class="table table-bordered">
+            <thead>
+              <tr>
+                <th></th>
+                <th>{% trans 'Название' %}</th>
+                <th>{% trans 'Вопросы' %}</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for chapter in chapters %}
+              <tr>
+                <td>
+                  <div class="d-flex justify-content-center align-items-center">
+                    <input type="checkbox" id="exampleCheck1">
+                  </div>
+                </td>
+                <td><div id="chapter_name_{{ forloop.counter }}" class="inline_editing" contenteditable="true">{{chapter.name}}</div></td>
+                <td><div id="chapter_questions_{{ forloop.counter }}" class="inline_editing" contenteditable="true">{{chapter.questions|safe}}</div></td>
+                <td>
+                  <div class="d-flex justify-content-center align-items-center">
+                    <a class="btn" href="#">{% trans 'поднять вверх'|capfirst %}</a>
+                  </div>
+                </td>
+              </tr>
+              {% endfor %}
+
+            </tbody>
+          </table>
+
+          {% else %}
+          <table id="chapters_table" class="table table-bordered">
             <thead>
               <tr>
                 <th>{% trans 'Название' %}</th>
@@ -31,6 +69,15 @@
           </table>
         </div>
       </div>
-
+  {% endif %}
     </div>
   </section>
+
+
+
+<!--templates data-->
+<script>
+  var button_up_name = '{% trans 'поднять вверх'|capfirst %}';
+  var num_of_rows =  {{chapters.length}};
+</script>
+
