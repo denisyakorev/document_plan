@@ -8,6 +8,8 @@
 
 {% include 'plan/chapters_data.html' %}
 
+{% include 'plan/templates.html' %}
+
 {% endblock %}
 
 {% block additional_scripts %}
@@ -15,6 +17,5 @@
     <script type="text/javascript" src="{% static "ckeditor/ckeditor-init.js" %}"></script>
     <script type="text/javascript" src="{% static "ckeditor/ckeditor/ckeditor.js" %}"></script>
     <script type="text/javascript" src="{% static "js/handlebars-v4.0.11.js" %}"></script>
-    <script type="text/javascript" src="{% static "js/templates.js" %}"></script>
     <script type="text/javascript" src="{% static "js/chapter_table.js" %}"></script>
 {% endblock %}

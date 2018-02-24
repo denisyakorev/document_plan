@@ -22,6 +22,11 @@ th{
 }
 
 
+#preloader {
+    margin-left:48%;
+}
+
+
 .color-white {
     color: white;
 }
@@ -42,4 +47,6 @@ th{
     background-color: #c82333;
     border-color: #bd2130;
 }
+
+
 

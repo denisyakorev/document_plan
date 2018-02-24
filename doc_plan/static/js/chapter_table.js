@@ -1,21 +1,25 @@
 function initial(){
             //Загрузка CKEditor
+           CKEDITOR.disableAutoInline = true;
            var inline_editing = document.getElementsByClassName('inline_editing');
            var id;
-           for (elem in inline_editing){
-                id = inline_editing[elem].id;
-                load_editor(id);
+
+           if (inline_editing.length > 0){
+                for (elem in inline_editing){
+                    id = inline_editing[elem].id;
+                    load_editor(id);
+                }
            }
-            console.log("Hello world");
+
            //Реализация добавления строк
            $('#add_row_btn').click(function(){
-               console.log("Hello world");
                add_new_row('chapters_table');
            })
 
 }
 
 function load_editor(name){
+
     var editor = CKEDITOR.instances[name];
     if (editor) { editor.destroy(true); }
     CKEDITOR.inline( name, {

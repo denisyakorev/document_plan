@@ -8,8 +8,7 @@
      <div class="row">
         <div class="col text-left">
           {% if edit %}
-          <h2>{% trans 'Название:' %}</h2>
-            {{plan.name}}
+            <h2 id="plan_name" class="inline_editing" contenteditable="true">{{plan.name}}</h2>
           {% else %}
             <h2>{{plan.name}}</h2>
           {% endif %}
@@ -30,9 +29,9 @@
             <tbody>
             {% if edit %}
               <tr>
-                <td>{{plan.aim_action}}</td>
-                <td>{{plan.aim_auditory}}</td>
-                <td>{{plan.aim_content}}</td>
+                <td><div id="aim_action" class="inline_editing" contenteditable="true">{{plan.aim_action}}</div></td>
+                <td><div id="aim_auditory" class="inline_editing" contenteditable="true">{{plan.aim_auditory}}</div></td>
+                <td><div id="aim_content" class="inline_editing" contenteditable="true">{{plan.aim_content}}</div></td>
               </tr>
             {% else %}
               <tr>
@@ -59,8 +58,8 @@
             <tbody>
               {% if edit %}
               <tr>
-                <td>{{plan.reaction_action}}</td>
-                <td>{{plan.reaction_standart}}</td>
+                <td><div id="reaction_action" class="inline_editing" contenteditable="true">{{plan.reaction_action}}</div></td>
+                <td><div id="reaction_standart" class="inline_editing" contenteditable="true">{{plan.reaction_standart}}</div></td>
               </tr>
               {% else %}
               <tr>
@@ -99,7 +98,7 @@
               <tr>
                 <td>{% trans 'Трудовые обязанности' %}</td>
                 {% if edit %}
-                 <td>{{plan.auditory_duty}}</td>
+                <td><div id="auditory_duty" class="inline_editing" contenteditable="true">{{plan.auditory_duty}}</div></td>
                 {% else %}
                 <td>{{plan.auditory_duty|bbcode|safe}}</td>
                 {% endif %}
@@ -107,7 +106,7 @@
               <tr>
                 <td>{% trans 'Знание предмета' %}</td>
                 {% if edit %}
-                 <td>{{plan.auditory_knowledge}}</td>
+                <td><div id="auditory_knowledge" class="inline_editing" contenteditable="true">{{plan.auditory_knowledge}}</div></td>
                 {% else %}
                 <td>{{plan.auditory_knowledge|bbcode|safe}}</td>
                 {% endif %}
@@ -115,7 +114,7 @@
               <tr>
                 <td>{% trans 'Демография' %}</td>
                 {% if edit %}
-                 <td>{{plan.auditory_demography}}</td>
+                <td><div id="auditory_demography" class="inline_editing" contenteditable="true">{{plan.auditory_demography}}</div></td>
                 {% else %}
                 <td>{{plan.auditory_demography|bbcode|safe}}</td>
                 {% endif %}
@@ -123,7 +122,7 @@
               <tr>
                 <td>{% trans 'Отношение' %}</td>
                 {% if edit %}
-                 <td>{{plan.auditory_relations}}</td>
+                <td><div id="auditory_relations" class="inline_editing" contenteditable="true">{{plan.auditory_relations}}</div></td>
                 {% else %}
                 <td>{{plan.auditory_relations|bbcode|safe}}</td>
                 {% endif %}
@@ -131,7 +130,7 @@
               <tr>
                 <td>{% trans 'Рабочая среда' %}</td>
                 {% if edit %}
-                 <td>{{plan.auditory_environment}}</td>
+                <td><div id="auditory_environment" class="inline_editing" contenteditable="true">{{plan.auditory_environment}}</div></td>
                 {% else %}
                 <td>{{plan.auditory_environment|bbcode|safe}}</td>
                 {% endif %}
@@ -139,7 +138,7 @@
               <tr>
                 <td>{% trans 'Выводы' %}</td>
                 {% if edit %}
-                 <td>{{plan.auditory_resume}}</td>
+                <td><div id="auditory_resume" class="inline_editing" contenteditable="true">{{plan.auditory_resume}}</div></td>
                 {% else %}
                 <td>{{plan.auditory_resume|bbcode|safe}}</td>
                 {% endif %}
@@ -175,8 +174,8 @@
             <tbody>
               <tr>
                 {% if edit %}
-                <td>{{plan.question_actions}}</td>
-                <td>{{plan.question_knowledges}}</td>
+                <td><div id="question_actions" class="inline_editing" contenteditable="true">{{plan.question_actions}}</div></td>
+                <td><div id="question_knowledges" class="inline_editing" contenteditable="true">{{plan.question_knowledges}}</div></td>
                 {% else %}
                 <td>{{plan.question_actions|bbcode|safe}}</td>
                 <td>{{plan.question_knowledges|bbcode|safe}}</td>

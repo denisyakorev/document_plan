@@ -64,7 +64,8 @@ def plan_edit(request, plan_id):
             try:
                 project = Project.objects.get(created_by=request.user, id=plan_id)
                 chapters = project.chapters.all()
-                plan_form = PlanForm(instance=project)
+                #plan_form = PlanForm(instance=project)
+                plan_form = project
                 chapter_forms = []
                 for each in chapters:
                     #chapter_forms.append(ChapterForm(instance=each))
