@@ -35,6 +35,10 @@ th{
     margin-bottom:30px;
 }
 
+.table-management-panel button{
+    margin-right:30px;
+}
+
 .btn-danger {
     color: #fff;
     background-color: #dc3545;

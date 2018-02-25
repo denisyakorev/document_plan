@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'wkhtmltopdf',
     'ckeditor',
     'precise_bbcode',
+    'django_ajax',
 ]
 
 MIDDLEWARE = [

@@ -11,33 +11,46 @@
       </div>
       <div class="row-100"></div>
 
-      {% if edit %}
-      <div id="chapters-container">
-        <img id="preloader" src="{% static '/imgs/25.gif' %}"/>
-      </div>
+            {% if edit %}
+            <div class="table-management-panel">
+              <button id="add-row-btn" class="btn">{% trans 'Добавить строку' %}</button>
+              <button id="delete-row-btn" class="btn btn-danger" style="display:none">{% trans 'Удалить' %}</button>
+
+            </div>
+            <table id="chapters_table" class="table table-bordered">
+              <thead>
+                <tr>
+                  <th style="width:10%"></th>
+                  <th style="width:20%">{% trans 'Название' %}</th>
+                  <th style="width:50%">{% trans 'Вопросы' %}</th>
+                  <th style="width:20%"></th>
+                </tr>
+              </thead>
+              <tbody id="chapters-container">
+              <tr><td colspan="4"><img id="preloader" src="{% static '/imgs/25.gif' %}"/></td></tr>
 
 
-          {% else %}
-          <table id="chapters_table" class="table table-bordered">
-            <thead>
-              <tr>
-                <th>{% trans 'Название' %}</th>
-                <th>{% trans 'Вопросы' %}</th>
-              </tr>
-            </thead>
-            <tbody>
+            {% else %}
+            <table id="chapters_table" class="table table-bordered">
+              <thead>
+                <tr>
+                  <th>{% trans 'Название' %}</th>
+                  <th>{% trans 'Вопросы' %}</th>
+                </tr>
+              </thead>
+              <tbody>
               {% for chapter in chapters %}
               <tr>
                 <td>{{chapter.name}}</td>
                 <td>{{chapter.questions|safe}}</td>
               </tr>
               {% endfor %}
-
-            </tbody>
-          </table>
-        </div>
+            {% endif %}
+          </tbody>
+        </table>
       </div>
-  {% endif %}
     </div>
-  </section>
+
+  </div>
+</section>
 

@@ -26,6 +26,7 @@ urlpatterns = [
     path('<int:plan_id>/view/', views.PlanView.as_view()),
     path('<str:plan_id>/edit/', login_required(views.plan_edit)),
     path('<int:plan_id>/download/', views.PlanPDF.as_view()),
+    path('<str:plan_id>/ajax/chapters/', views.get_chapters_data),
     #path('<int:plan_id>/view_pdf/', views.PlanPdfView.as_view()),
 ]
 
