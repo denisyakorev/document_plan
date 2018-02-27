@@ -22,6 +22,16 @@ th{
 }
 
 
+button {
+    cursor: pointer;
+}
+
+
+button:hover {
+    cursor: pointer;
+}
+
+
 #preloader {
     margin-left:48%;
 }

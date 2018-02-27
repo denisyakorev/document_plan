@@ -1,0 +1,12 @@
+{% load i18n %}
+
+<form id="save-form" class="fdb-block" action="/docplan/{{plan.id}}/save/">
+    {% csrf_token %}
+    <div class="container">
+      <div class="row">
+        <div class="col text-left">
+          <button id="save-plan" class="btn">{% trans 'Сохранить' %}</button>
+        </div>
+      </div>
+    </div>
+</form>

@@ -75,3 +75,7 @@ def get_chapters_data(request, plan_id):
         chapters = context['chapters']
 
     return {'chapters': chapters}
+
+@ajax
+def save_data(request, plan_id):
+    pass

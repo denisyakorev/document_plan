@@ -2,6 +2,8 @@ var CONTAINER_ID = 'chapters-container';
 var ROW_TEMPLATE_ID = 'new_chapter_row';
 var PLAN_ID_HOLDER = 'plan_name';
 var PLAN_ID_ATTR = 'js-plan-id';
+var PLAN_SAVE_BTN_ID = 'save-plan';
+var SAVE_FORM_ID = 'save-form';
 
 var DELETE_ROW_BTN_ID = 'delete-row-btn';
 var ADD_ROW_BTN_ID = 'add-row-btn';
@@ -9,6 +11,8 @@ var CHECKBOX_PREFIX = 'chapter_checkbox_';
 var CHAPTER_NAME_PREFIX = 'chapter_name_';
 var CHAPTER_QUESTION_PREFIX = 'chapter_questions_';
 var UP_BTN_PREFIX = 'upBtn_';
+var PLAN_CLASS = 'plan';
+var CHAPTERS_CLASS = 'chapters';
 var COUNTER = 0;
 
 
@@ -73,7 +77,8 @@ Mustache.tags = ['[[', ']]'];
 
 $(document).ready(function(){
     getData();
-    initTable();
+    initPage();
+
 });
 
 
@@ -104,16 +109,7 @@ function createTable(data){
     var context;
     var container = $("#" + CONTAINER_ID);
 
-    if (data.content.chapters.length == 0){
-        chapters = [{
-            'id': 'new_0',
-            'name': ' ',
-            'questions': ' '
-        }];
-        COUNTER += 1;
-    }else{
-        chapters = data.content.chapters;
-    }
+    chapters = data.content.chapters;
 
     $(container).empty();
     for (chapter in chapters){
@@ -137,10 +133,11 @@ function createRow(context){
 }
 
 
-//Инициализация событий на общих для всей таблицы элементах
-function initTable(){
+//Инициализация событий на общих для всей страницы элементах
+function initPage(){
     $("#" + DELETE_ROW_BTN_ID).bind('click', deleteRows);
     $("#" + ADD_ROW_BTN_ID).bind('click', addRow);
+    $("#" + PLAN_SAVE_BTN_ID).bind('click', save);
 }
 
 
@@ -184,6 +181,8 @@ function addRow(){
 
     createRow(context);
     COUNTER += 1;
+
+    toggleUpBtn();
 }
 
 
@@ -215,6 +214,44 @@ function toggleDeleteBtn(){
         $("#" + DELETE_ROW_BTN_ID).hide();
     }
 
+}
+
+
+function save(){
+    //Собираем объект для отправки
+    var postData = {};
+    var plan = {};
+
+    $('.'+PLAN_CLASS).each(function(){
+        plan[$(this).attr("id")] = $(this).html();
+    });
+
+    var chapters = [];
+    var chapter = {};
+    var id;
+
+    $("#" + CONTAINER_ID+" tr").each(function(){
+        id = $(this).attr('id');
+        chapter = {
+            'id': id,
+            'name': $("#" + CHAPTER_NAME_PREFIX + id).html(),
+            'questions': $("#" + CHAPTER_QUESTION_PREFIX + id).html()
+        };
+        chapters.push(chapter);
+    });
+
+    postData['plan'] = plan;
+    postData['chapters'] = chapters;
+
+    var csrftoken = $("[name=csrfmiddlewaretoken]").val();
+    var url = $("#" + SAVE_FORM_ID).attr("action");
+
+    //Отправляем
+    $.ajax{
+        url:url,
+        method: "POST",
+        
+    }
 }
 
 
