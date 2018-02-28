@@ -14,6 +14,11 @@ var UP_BTN_PREFIX = 'upBtn_';
 var PLAN_CLASS = 'plan';
 var CHAPTERS_CLASS = 'chapters';
 var COUNTER = 0;
+var URL_GET;
+var URL_POST;
+
+
+
 
 
 
@@ -76,6 +81,11 @@ Mustache.tags = ['[[', ']]'];
 
 
 $(document).ready(function(){
+    var plan_id = $('#' + PLAN_ID_HOLDER).attr(PLAN_ID_ATTR);
+    if (!plan_id){ plan_id = 'new' };
+    URL_GET = '/docplan/'+plan_id+'/ajax/chapters/';
+    URL_POST = '/docplan/'+plan_id+'/save/';
+
     getData();
     initPage();
 
@@ -86,13 +96,9 @@ $(document).ready(function(){
 function getData(){
     var result;
 
-    var plan_id = $('#' + PLAN_ID_HOLDER).attr(PLAN_ID_ATTR);
-    if (!plan_id){ plan_id = 'new' };
-    var URL = '/docplan/'+plan_id+'/ajax/chapters/';
-
      $.ajax({
         type: 'GET',
-        url: URL,
+        url: URL_GET,
         success: function (data, textStatus) {
             createTable(data);
         },
@@ -105,11 +111,10 @@ function getData(){
 
 //Создание таблицы по полученным данным
 function createTable(data){
-
     var context;
     var container = $("#" + CONTAINER_ID);
 
-    chapters = data.content.chapters;
+    chapters = data.chapters;
 
     $(container).empty();
     for (chapter in chapters){
@@ -217,13 +222,32 @@ function toggleDeleteBtn(){
 }
 
 
+// using jQuery
+function getCookie(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = jQuery.trim(cookies[i]);
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+
+
+
 function save(){
     //Собираем объект для отправки
     var postData = {};
     var plan = {};
 
     $('.'+PLAN_CLASS).each(function(){
-        plan[$(this).attr("id")] = $(this).html();
+        plan[$(this).attr("id")] = CKEDITOR.instances[$(this).attr("id")].getData();
     });
 
     var chapters = [];
@@ -232,26 +256,39 @@ function save(){
 
     $("#" + CONTAINER_ID+" tr").each(function(){
         id = $(this).attr('id');
+        name_id = CHAPTER_NAME_PREFIX + id;
+        questions_id = CHAPTER_QUESTION_PREFIX + id
         chapter = {
             'id': id,
-            'name': $("#" + CHAPTER_NAME_PREFIX + id).html(),
-            'questions': $("#" + CHAPTER_QUESTION_PREFIX + id).html()
+            'name': CKEDITOR.instances[name_id].getData(),
+            'questions': CKEDITOR.instances[questions_id].getData()
         };
         chapters.push(chapter);
     });
 
-    postData['plan'] = plan;
-    postData['chapters'] = chapters;
+    postData['plan'] = JSON.stringify(plan);
+    postData['chapters'] = JSON.stringify(chapters);
 
-    var csrftoken = $("[name=csrfmiddlewaretoken]").val();
-    var url = $("#" + SAVE_FORM_ID).attr("action");
+    var csrftoken = getCookie('csrftoken');
 
     //Отправляем
-    $.ajax{
-        url:url,
+    $.ajax({
+        url: URL_POST,
         method: "POST",
-        
-    }
+        data:{
+            csrfmiddlewaretoken: csrftoken,
+            plan: postData['plan'],
+            chapters: postData['chapters']
+        },
+        success: function (data, textStatus) {
+            console.log('success');
+            console.log(data);
+        },
+        error: function(xhr, status, e) {
+            console.log(status, e);
+        }
+
+    });
 }
 
 
