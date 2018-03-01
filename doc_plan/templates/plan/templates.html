@@ -8,8 +8,8 @@
             <input id="chapter_checkbox_[[chapter.id]]" type="checkbox" class="chapter_checkbox">
           </div>
         </td>
-        <td><div id="chapter_name_[[chapter.id]]" class="chapters inline_editing" contenteditable="true">[[chapter.name]]</div></td>
-        <td><div id="chapter_questions_[[chapter.id]]" class="chapters inline_editing" contenteditable="true">[[chapter.questions]]</div></td>
+        <td><div id="chapter_name_[[chapter.id]]" model-attr="name" class="chapters inline_editing" contenteditable="true">[[chapter.name]]</div></td>
+        <td><div id="chapter_questions_[[chapter.id]]" model-attr="questions" class="chapters inline_editing" contenteditable="true">[[chapter.questions]]</div></td>
         <td>
           <div class="d-flex justify-content-center align-items-center">
             <button id="upBtn_[[chapter.id]]" class="btn">{% trans 'Поднять вверх' %}</a>
@@ -17,3 +17,12 @@
         </td>
     </tr>
   </script>
+
+<script id="error_message_template" type="text/x-tmpl-mustache">
+  <div class="error_message">[[error_message]]</div>
+</script>
+
+
+<script id="submit_error_template" type="text/x-tmpl-mustache">
+  <div class="error_message">{% trans 'Заполните все обязательные поля' %}</div>
+</script>

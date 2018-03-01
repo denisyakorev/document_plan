@@ -33,6 +33,7 @@ class PlanForm(ModelForm):
 
 
 class ChapterForm(ModelForm):
+
     class Meta:
         model = Chapter
         fields = ['name', 'questions']

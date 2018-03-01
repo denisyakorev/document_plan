@@ -3,12 +3,12 @@ from django.views.generic import TemplateView
 from django.views.generic.base import ContextMixin
 from doc_plan.utils import add_plan_data
 from wkhtmltopdf.views import PDFTemplateView
-from doc_plan.models import Project
+from doc_plan.models import Project, Chapter
 from django_ajax.decorators import ajax
 from django.utils.translation import ugettext_lazy as _
 from django.http import HttpResponse
 import json
-from doc_plan.forms import PlanForm
+from doc_plan.forms import PlanForm, ChapterForm
 
 
 # Create your views here.
@@ -65,23 +65,103 @@ class PlanEditView(TemplateView):
 
 
     def save_data(self, request, *args, **kwargs):
+
+        if request.method != "POST":
+            return self.bad_request(message="plan does not exists")
+
+        errors = {}
+
+        #Проверяем данные плана
         plan = request.POST.get('plan', None)
-        #Если переданы данные о плане
         if plan == None:
-            return self.bad_request("plan does not exists")
-        else:
-            old_plan = Project.objects.get(created_by=request.user, id=kwargs['plan_id'])
-            if not old_plan:
-                return self.bad_request("plan does not exists")
+            return self.bad_request(message="plan does not exists")
+
+        plan = json.loads(plan)
+        plan_form = PlanForm(plan)
+        if not plan_form.is_valid():
+            errors['plan'] = []
+            errors['plan'].append(plan_form.errors)
+
+        #Проверяем данные разделов
+        chapters = request.POST.get('chapters', None)
+        if chapters != None:
+            chapters = json.loads(chapters)
+            chapters_cleaned_data = []
+            for chapter in chapters:
+                chapter_form = ChapterForm(chapter)
+                if not chapter_form.is_valid():
+                    errors['chapters'] = errors.get('chapters', [])
+                    errors['chapters'].append({
+                    'id': chapter['id'],
+                    'errors': chapter_form.errors
+                    })
+                else:
+                    chapter_data = chapter_form.cleaned_data
+                    chapter_data['id'] = chapter['id']
+                    chapters_cleaned_data.append(chapter_data)
+
+
+        if not errors:
+            saved_chapters = self.save_chapters(chapters_cleaned_data)
+            plan_data = plan_form.cleaned_data
+            plan_data['created_by'] = request.user
+            plan_data['id'] = kwargs['plan_id']
+            chapters = saved_chapters
+            is_plan_saved = self.save_plan(plan_data, chapters)
+            if is_plan_saved:
+                return HttpResponse(json.dumps({'message': 'plan_saved'}),
+                             content_type='application/json')
+
+
+
+        return self.bad_request(message="Incorrect data", errors=errors)
+
+
+    def save_chapters(self, chapters_data):
+        chapters = []
+        for chapter in chapters_data:
+            print (chapter)
+            if "new" in chapter['id']:
+                old_chapter = False
             else:
-                # и есть существующий план с аналогичными данными
-                pass
+                old_chapter = Chapter.objects.select_for_update().filter(id=chapter['id'])
+            if not old_chapter:
+                del chapter['id']
+                new_chapter = Chapter.objects.create(**chapter)
+                chapters.append(new_chapter)
+            else:
+                old_chapter.update(**chapter)
+                old_chapter.save()
+                chapters.append(old_chapter)
+
+        return chapters
+
+
+
+    def save_plan(self, plan_data, chapters):
+
+        if plan_data['id'] == 'new':
+            del plan_data['id']
+            plan = Project.objects.create(**plan_data)
+
+        else:
+            plan = Project.objects.select_for_update().filter(created_by=plan_data['created_by'],
+                                                                  id=plan_data['id'])
+            if not plan:
+                return False
+            plan.update(**plan_data)
+
+        plan.chapters.clear()
+        for chapter in chapters:
+            plan.chapters.add(chapter)
+
+        plan.save()
+
+        return True
 
 
 
 
-
-        return self.bad_request("plan does not exists")
 
 
     def get_chapters_data(self, request, *args, **kwargs):
@@ -97,8 +177,11 @@ class PlanEditView(TemplateView):
         return response
 
 
-    def bad_request(self, message):
-        response = HttpResponse(json.dumps({'message': message}),
+    def bad_request(self, **kwargs):
+        response_data = {}
+        for elem in kwargs:
+            response_data[elem] = kwargs[elem]
+        response = HttpResponse(json.dumps(response_data),
                                 content_type='application/json')
         response.status_code = 400
         return response

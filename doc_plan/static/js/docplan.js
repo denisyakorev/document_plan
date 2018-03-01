@@ -13,6 +13,9 @@ var CHAPTER_QUESTION_PREFIX = 'chapter_questions_';
 var UP_BTN_PREFIX = 'upBtn_';
 var PLAN_CLASS = 'plan';
 var CHAPTERS_CLASS = 'chapters';
+var ERROR_MESSAGE_TEMPLATE_ID = 'error_message_template';
+var ERROR_MESSAGE_CLASS = 'error_message';
+var SUBMIT_ERROR_ID = 'submit_error_template';
 var COUNTER = 0;
 var URL_GET;
 var URL_POST;
@@ -284,11 +287,51 @@ function save(){
             console.log('success');
             console.log(data);
         },
-        error: function(xhr, status, e) {
-            console.log(status, e);
+        error: function(data, textStatus, e) {
+            var response = JSON.parse(data.responseText);
+            showErrors(response)
+
+
         }
 
     });
+}
+
+function showErrors(response){
+
+    if (response.errors){
+        var template = $("#" + ERROR_MESSAGE_TEMPLATE_ID).html();
+        var submitErrorTemplate = $("#" + SUBMIT_ERROR_ID).html();
+        var context = {};
+        $("." + ERROR_MESSAGE_CLASS).detach();
+        $("#" + PLAN_SAVE_BTN_ID).before(Mustache.render(submitErrorTemplate, context));
+
+        if(response.errors.plan){
+            for (each in response.errors.plan[0]){
+                for (elem in response.errors.plan[0][each]){
+                    context['error_message'] += response.errors.plan[0][each][elem];
+                }
+                $("#" + each).before(Mustache.render(template, context));
+            }
+        }
+
+        var selector = "";
+        for (each in response.errors.chapters){
+        context['error_message'] = "";
+        selector = "#" + response.errors.chapters[each].id
+            for (elem in response.errors.chapters[each].errors){
+                curError = response.errors.chapters[each].errors[elem]
+                cur_selector = selector + " [model-attr = " + elem + "]";
+                for (error in curError){
+                     context['error_message'] += curError[error];
+                }
+                $(cur_selector).before(Mustache.render(template, context));
+
+            }
+
+        }
+
+    }
 }
 
 

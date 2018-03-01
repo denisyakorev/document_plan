@@ -37,6 +37,11 @@ button:hover {
 }
 
 
+#name {
+    background-color: #F4F4F4;
+}
+
+
 .color-white {
     color: white;
 }
@@ -61,6 +66,13 @@ button:hover {
     background-color: #c82333;
     border-color: #bd2130;
 }
+
+.error_message{
+    color:red;
+    font-style: italic;
+}
+
+
 
 
 

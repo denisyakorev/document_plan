@@ -7,8 +7,9 @@
     <div class="container">
      <div class="row">
         <div class="col text-left">
+
           {% if edit %}
-            <h2 id="plan_name" js-plan-id="{{plan.id}}" class="plan inline_editing" contenteditable="true">{{plan.name}}</h2>
+            <h2 id="name" js-plan-id="{{plan.id}}" class="plan inline_editing" contenteditable="true">{{plan.name}}</h2>
           {% else %}
             <h2>{{plan.name}}</h2>
           {% endif %}
