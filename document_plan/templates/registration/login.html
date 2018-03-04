@@ -11,14 +11,14 @@
           <div class="fdb-box fdb-touch">
             <div class="row">
               <div class="col">
-                <h1>Log In</h1>
+                <h1>{% trans 'вход'|capfirst %}</h1>
               </div>
             </div>
               <form action="" method="post">
                   {% csrf_token %}
                 {% if form.errors %}
                 <div class="alert alert-danger" role="alert">
-                  {% trans "There was an error with your E-mail/Password combination. Please try again" %}
+                  {% trans "Некорректный логин или пароль. Пожалуйста, попробуйте ввести их ещё раз" %}
                 </div>
                 {% endif %}
                 <div class="row mt-4">
@@ -28,13 +28,13 @@
                 </div>
                 <div class="row mt-4">
                   <div class="col">
-                    <input type="password" name="password" id="password" class="form-control mb-1" placeholder="Password">
-                    <p class="text-right" style="display:none"><a href="#">Recover Password</a></p>
+                    <input type="password" name="password" id="password" class="form-control mb-1" placeholder="{% trans 'пароль'|capfirst %}">
+                    <p class="text-right" style="display:none"><a href="#">{% trans 'Восстановить пароль' %}</a></p>
                   </div>
                 </div>
                 <div class="row mt-4">
                   <div class="col">
-                    <input class="btn" type="submit" value="Submit"></input>
+                    <input class="btn" type="submit" value="Войти"></input>
                   </div>
                 </div>
               </form>

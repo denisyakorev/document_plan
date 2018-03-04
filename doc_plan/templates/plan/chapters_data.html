@@ -1,5 +1,6 @@
 {% load i18n %}
 {% load static %}
+{% load bbcode_tags %}
 
   <!--Разбивка по разделам-->
   <section class="fdb-block">
@@ -41,8 +42,8 @@
               <tbody>
               {% for chapter in chapters %}
               <tr>
-                <td>{{chapter.name}}</td>
-                <td>{{chapter.questions|safe}}</td>
+                <td>{{chapter.name|bbcode|safe}}</td>
+                <td>{{chapter.questions|bbcode|safe}}</td>
               </tr>
               {% endfor %}
             {% endif %}

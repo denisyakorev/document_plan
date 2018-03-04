@@ -9,9 +9,9 @@
         <div class="col text-left">
 
           {% if edit %}
-            <h2 id="name" js-plan-id="{{plan.id}}" class="plan inline_editing" contenteditable="true">{{plan.name}}</h2>
+            <h2 id="name" js-plan-id="{{plan.id}}" class="plan inline_editing" contenteditable="true">{{plan.name|bbcode|safe}}</h2>
           {% else %}
-            <h2>{{plan.name}}</h2>
+            <h2>{{plan.name|bbcode|safe}}</h2>
           {% endif %}
         </div>
       </div>
@@ -30,9 +30,9 @@
             <tbody>
             {% if edit %}
               <tr>
-                <td><div id="aim_action" class="plan inline_editing" contenteditable="true">{{plan.aim_action}}</div></td>
-                <td><div id="aim_auditory" class="plan inline_editing" contenteditable="true">{{plan.aim_auditory}}</div></td>
-                <td><div id="aim_content" class="plan inline_editing" contenteditable="true">{{plan.aim_content}}</div></td>
+                <td><div id="aim_action" class="plan inline_editing" contenteditable="true">{{plan.aim_action|bbcode|safe}}</div></td>
+                <td><div id="aim_auditory" class="plan inline_editing" contenteditable="true">{{plan.aim_auditory|bbcode|safe}}</div></td>
+                <td><div id="aim_content" class="plan inline_editing" contenteditable="true">{{plan.aim_content|bbcode|safe}}</div></td>
               </tr>
             {% else %}
               <tr>
@@ -59,8 +59,8 @@
             <tbody>
               {% if edit %}
               <tr>
-                <td><div id="reaction_action" class="plan inline_editing" contenteditable="true">{{plan.reaction_action}}</div></td>
-                <td><div id="reaction_standart" class="plan inline_editing" contenteditable="true">{{plan.reaction_standart}}</div></td>
+                <td><div id="reaction_action" class="plan inline_editing" contenteditable="true">{{plan.reaction_action|bbcode|safe}}</div></td>
+                <td><div id="reaction_standart" class="plan inline_editing" contenteditable="true">{{plan.reaction_standart|bbcode|safe}}</div></td>
               </tr>
               {% else %}
               <tr>
@@ -99,7 +99,7 @@
               <tr>
                 <td>{% trans 'Трудовые обязанности' %}</td>
                 {% if edit %}
-                <td><div id="auditory_duty" class="plan inline_editing" contenteditable="true">{{plan.auditory_duty}}</div></td>
+                <td><div id="auditory_duty" class="plan inline_editing" contenteditable="true">{{plan.auditory_duty|bbcode|safe}}</div></td>
                 {% else %}
                 <td>{{plan.auditory_duty|bbcode|safe}}</td>
                 {% endif %}
@@ -107,7 +107,7 @@
               <tr>
                 <td>{% trans 'Знание предмета' %}</td>
                 {% if edit %}
-                <td><div id="auditory_knowledge" class="plan inline_editing" contenteditable="true">{{plan.auditory_knowledge}}</div></td>
+                <td><div id="auditory_knowledge" class="plan inline_editing" contenteditable="true">{{plan.auditory_knowledge|bbcode|safe}}</div></td>
                 {% else %}
                 <td>{{plan.auditory_knowledge|bbcode|safe}}</td>
                 {% endif %}
@@ -115,7 +115,7 @@
               <tr>
                 <td>{% trans 'Демография' %}</td>
                 {% if edit %}
-                <td><div id="auditory_demography" class="plan inline_editing" contenteditable="true">{{plan.auditory_demography}}</div></td>
+                <td><div id="auditory_demography" class="plan inline_editing" contenteditable="true">{{plan.auditory_demography|bbcode|safe}}</div></td>
                 {% else %}
                 <td>{{plan.auditory_demography|bbcode|safe}}</td>
                 {% endif %}
@@ -123,7 +123,7 @@
               <tr>
                 <td>{% trans 'Отношение' %}</td>
                 {% if edit %}
-                <td><div id="auditory_relations" class="plan inline_editing" contenteditable="true">{{plan.auditory_relations}}</div></td>
+                <td><div id="auditory_relations" class="plan inline_editing" contenteditable="true">{{plan.auditory_relations|bbcode|safe}}</div></td>
                 {% else %}
                 <td>{{plan.auditory_relations|bbcode|safe}}</td>
                 {% endif %}
@@ -131,7 +131,7 @@
               <tr>
                 <td>{% trans 'Рабочая среда' %}</td>
                 {% if edit %}
-                <td><div id="auditory_environment" class="plan inline_editing" contenteditable="true">{{plan.auditory_environment}}</div></td>
+                <td><div id="auditory_environment" class="plan inline_editing" contenteditable="true">{{plan.auditory_environment|bbcode|safe}}</div></td>
                 {% else %}
                 <td>{{plan.auditory_environment|bbcode|safe}}</td>
                 {% endif %}
@@ -139,7 +139,7 @@
               <tr>
                 <td>{% trans 'Выводы' %}</td>
                 {% if edit %}
-                <td><div id="auditory_resume" class="plan inline_editing" contenteditable="true">{{plan.auditory_resume}}</div></td>
+                <td><div id="auditory_resume" class="plan inline_editing" contenteditable="true">{{plan.auditory_resume|bbcode|safe}}</div></td>
                 {% else %}
                 <td>{{plan.auditory_resume|bbcode|safe}}</td>
                 {% endif %}
@@ -175,8 +175,8 @@
             <tbody>
               <tr>
                 {% if edit %}
-                <td><div id="question_actions" class="plan inline_editing" contenteditable="true">{{plan.question_actions}}</div></td>
-                <td><div id="question_knowledges" class="plan inline_editing" contenteditable="true">{{plan.question_knowledges}}</div></td>
+                <td><div id="question_actions" class="plan inline_editing" contenteditable="true">{{plan.question_actions|bbcode|safe}}</div></td>
+                <td><div id="question_knowledges" class="plan inline_editing" contenteditable="true">{{plan.question_knowledges|bbcode|safe}}</div></td>
                 {% else %}
                 <td>{{plan.question_actions|bbcode|safe}}</td>
                 <td>{{plan.question_knowledges|bbcode|safe}}</td>

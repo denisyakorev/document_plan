@@ -23,11 +23,12 @@ from django.contrib.auth.decorators import login_required
 
 urlpatterns = [
     path('', TemplateView.as_view(template_name= 'landing/content.html')),
-    path('<int:plan_id>/view/', views.PlanView.as_view()),
+    path('<str:plan_id>/view/', views.PlanView.as_view()),
     path('<str:plan_id>/edit/', login_required(views.PlanEditView.as_view())),
-    path('<int:plan_id>/download/', views.PlanPDF.as_view()),
+    path('<str:plan_id>/download/', views.PlanPDF.as_view()),
     path('<str:plan_id>/ajax/chapters/', login_required(views.PlanEditView().get_chapters_data)),
-    path('<str:plan_id>/save/', views.PlanEditView().save_data),
+    path('<str:plan_id>/save/', login_required(views.PlanEditView().save_data)),
+    path('<str:plan_id>/delete/', login_required(views.PlanEditView().delete_plan)),
     #path('<int:plan_id>/view_pdf/', views.PlanPdfView.as_view()),
 ]
 

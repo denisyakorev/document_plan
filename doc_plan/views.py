@@ -6,9 +6,11 @@ from wkhtmltopdf.views import PDFTemplateView
 from doc_plan.models import Project, Chapter
 from django_ajax.decorators import ajax
 from django.utils.translation import ugettext_lazy as _
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect, Http404
 import json
 from doc_plan.forms import PlanForm, ChapterForm
+from precise_bbcode.bbcode import get_parser
+from django.utils.safestring import mark_safe
 
 
 # Create your views here.
@@ -49,13 +51,16 @@ class PlanPdfView(TemplateView, PlanContextMixin):
 
 class PlanEditView(TemplateView):
     template_name = 'plan/plan_edit.html'
-
+    default_plan_id = 1
 
     def get_context_data(self, **kwargs):
         context = {'edit': True}
 
         if kwargs['plan_id'] == 'new':
-            plan = {'name': _('Название нового плана')}
+            try:
+                plan = Project.objects.get(id=self.default_plan_id)
+            except Project.DoesNotExist:
+                plan = {'name': _('Название нового плана')}
             context['plan'] = plan
         else:
             context = add_plan_data(self.request, context, kwargs['plan_id'])
@@ -107,10 +112,14 @@ class PlanEditView(TemplateView):
             plan_data['created_by'] = request.user
             plan_data['id'] = kwargs['plan_id']
             chapters = saved_chapters
-            is_plan_saved = self.save_plan(plan_data, chapters)
-            if is_plan_saved:
-                return HttpResponse(json.dumps({'message': 'plan_saved'}),
+            new_plan_id = self.save_plan(plan_data, chapters)
+            if new_plan_id:
+                response = HttpResponse(json.dumps({'plan_id': new_plan_id}),
                              content_type='application/json')
+                response.status_code = 200
+
+                return response
+
 
 
 
@@ -124,14 +133,16 @@ class PlanEditView(TemplateView):
             if "new" in chapter['id']:
                 old_chapter = False
             else:
-                old_chapter = Chapter.objects.select_for_update().filter(id=chapter['id'])
+                old_chapter = Chapter.objects.get(id=chapter['id'])
             if not old_chapter:
                 del chapter['id']
                 new_chapter = Chapter.objects.create(**chapter)
                 chapters.append(new_chapter)
             else:
-                old_chapter.update(**chapter)
+                old_chapter.name = chapter['name']
+                old_chapter.questions = chapter['questions']
                 old_chapter.save()
+
                 chapters.append(old_chapter)
 
         return chapters
@@ -145,19 +156,44 @@ class PlanEditView(TemplateView):
             plan = Project.objects.create(**plan_data)
 
         else:
-            plan = Project.objects.select_for_update().filter(created_by=plan_data['created_by'],
+            plan = Project.objects.get(created_by=plan_data['created_by'],
                                                                   id=plan_data['id'])
             if not plan:
                 return False
-            plan.update(**plan_data)
 
-        plan.chapters.clear()
-        for chapter in chapters:
-            plan.chapters.add(chapter)
+            plan.name = plan_data['name']
+            plan.aim_action = plan_data['aim_action']
+            plan.aim_auditory = plan_data['aim_auditory']
+            plan.aim_content = plan_data['aim_content']
+            plan.reaction_action = plan_data['reaction_action']
+            plan.reaction_standart = plan_data['reaction_standart']
+            plan.auditory_duty = plan_data['auditory_duty']
+            plan.auditory_knowledge = plan_data['auditory_knowledge']
+            plan.auditory_demography = plan_data['auditory_demography']
+            plan.auditory_relations = plan_data['auditory_relations']
+            plan.auditory_environment = plan_data['auditory_environment']
+            plan.auditory_resume = plan_data['auditory_resume']
+            plan.question_actions = plan_data['question_actions']
+            plan.question_knowledges = plan_data['question_knowledges']
 
-        plan.save()
+            plan.chapters.clear()
+            for chapter in chapters:
+                plan.chapters.add(chapter)
 
-        return True
+            plan.save()
+
+        return plan.id
+
+
+    def delete_plan(self, request, *args, **kwargs):
+        try:
+            plan = Project.objects.get(created_by=request.user,
+                                   id=kwargs['plan_id'])
+        except Project.DoesNotExist:
+            raise Http404("Plan does not exist")
+
+        plan.delete()
+        return HttpResponseRedirect('/accounts/profile/')
 
 
 
@@ -165,14 +201,20 @@ class PlanEditView(TemplateView):
 
 
     def get_chapters_data(self, request, *args, **kwargs):
+        context = {}
         if kwargs['plan_id'] == 'new':
             chapters = []
         else:
             context = add_plan_data(request, context={}, plan_id=kwargs['plan_id'])
             chapters = context['chapters']
+            parcer = get_parser()
+            for chapter in chapters:
+                chapter['name'] = parcer.render(chapter['name'])
+                chapter['questions'] = parcer.render(chapter['questions'])
 
         response = HttpResponse(json.dumps({'chapters': chapters}),
                                 content_type='application/json')
+        response.status_code = 200
 
         return response
 

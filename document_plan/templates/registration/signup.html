@@ -12,44 +12,44 @@
           <div class="fdb-box fdb-touch">
             <div class="row">
               <div class="col">
-                <h1>Sign Up</h1>
+                <h1>{% trans 'регистрация'|capfirst %}</h1>
               </div>
             </div>
               <form action="" method="post">
                   {% csrf_token %}
                 {% if form.errors %}
                 <div class="alert alert-danger" role="alert">
-                  {% trans "Something wrong. Check your input information" %}
+                  {% trans "Введены некорректные значения. Исправьте их и повторите попытку" %}
                 </div>
                 {% endif %}
                 <div class="row mt-4">
                   <div class="col">
                     <input type="text" name="username" id="username" class="form-control" placeholder="Email">
                     <div class="alert alert-info" role="alert">
-                        {% trans "Your e-mail can include letters, digits and symbols: @ _ + -" %}
+                        {% trans "Адрес электронной почты может содержать латинские буквы, цифры и символы: @ _ + -" %}
                     </div>
                   </div>
 
                 </div>
                 <div class="row mt-4">
                   <div class="col">
-                    <input type="password" name="password1" id="password1" class="form-control mb-1" placeholder="Password">
+                    <input type="password" name="password1" id="password1" class="form-control mb-1" placeholder="{% trans 'пароль'|capfirst %}">
                     <div class="alert alert-info" role="alert">
-                        {% trans "Your password must contain at least 8 characters and can't be entirely numeric" %}
+                        {% trans "Пароль должен содержать минимум 8 символов и не может полностью состоять из цифр" %}
                     </div>
                   </div>
                 </div>
                 <div class="row mt-4">
                   <div class="col">
-                    <input type="password" name="password2" id="password2" class="form-control mb-1" placeholder="Confirm Password">
+                    <input type="password" name="password2" id="password2" class="form-control mb-1" placeholder="{% trans 'повторите пароль'|capfirst%}">
                     <div class="alert alert-info" role="alert">
-                        {% trans "Enter the same password as before, for verification" %}
+                        {% trans "Для проверки введите тот же пароль, что и в поле выше" %}
                     </div>
                   </div>
                 </div>
                 <div class="row mt-4">
                   <div class="col">
-                    <input class="btn" type="submit" value="Submit"></input>
+                    <input class="btn" type="submit" value="{% trans 'регистрация'|capfirst %}"></input>
                   </div>
                 </div>
               </form>

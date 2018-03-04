@@ -1,6 +1,6 @@
 var CONTAINER_ID = 'chapters-container';
 var ROW_TEMPLATE_ID = 'new_chapter_row';
-var PLAN_ID_HOLDER = 'plan_name';
+var PLAN_ID_HOLDER = 'name';
 var PLAN_ID_ATTR = 'js-plan-id';
 var PLAN_SAVE_BTN_ID = 'save-plan';
 var SAVE_FORM_ID = 'save-form';
@@ -32,7 +32,6 @@ var URL_POST;
 
 
 var toolbarsGroup_basic = [
-                {"name": "basicstyles", "groups": ["basicstyles"]},
                 {"name": 'clipboard', "groups": [ 'selection', 'clipboard' ] },
                 {"name": "document", "groups": ["mode"]},
             ];
@@ -58,6 +57,7 @@ CKEDITOR.on( 'instanceCreated', function ( event ) {
         if ( element.is( 'h1', 'h2', 'h3' )) {
 
             editor.config.toolbarGroups= toolbarsGroup_basic;
+
 
         }else{
             editor.config.toolbarGroups= toolbarsGroup_extend;
@@ -124,6 +124,7 @@ function createTable(data){
         context = {
             'chapter': chapters[chapter]
         }
+
        createRow(context);
 
     }
@@ -136,7 +137,8 @@ function createRow(context){
 
     var container = $("#" + CONTAINER_ID);
     var template = $("#" + ROW_TEMPLATE_ID).html();
-    $(container).append(Mustache.render(template, context));
+    var row_html = Mustache.render(template, context);
+    $(container).append(row_html);
     initRow(context.chapter.id);
 }
 
@@ -284,8 +286,7 @@ function save(){
             chapters: postData['chapters']
         },
         success: function (data, textStatus) {
-            console.log('success');
-            console.log(data);
+            window.location.replace('/docplan/'+data['plan_id']+'/view/')
         },
         error: function(data, textStatus, e) {
             var response = JSON.parse(data.responseText);
