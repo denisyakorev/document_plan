@@ -18,8 +18,7 @@ from django.urls import path
 from django.urls import include
 from django.contrib.auth.views import login, logout
 from accounts import views as accounts
-from doc_plan import views as doc_plan
-from doc_plan.views import ProjectListView
+from document_plan.views import ProjectListView
 from django.contrib.auth.decorators import login_required
 
 

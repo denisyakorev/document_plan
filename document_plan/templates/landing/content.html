@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
+{% load i18n %}
 
 
 {% block content %}
@@ -12,9 +13,9 @@
             <div class="row justify-content-center">
               <div class="col-12 col-xl-8 text-center">
                 <h1>Document Plan</h1>
-                <p class="text-h3">Пойми, что должно быть в твоём документе</p>
+                <p class="text-h3">{% trans 'Пойми, что должно быть в твоём документе' %}</p>
 
-                <p class="text-h3 mt-4"><a href="/docplan/plan_creation/" class="btn btn-round">О методике</a></p>
+                <p class="text-h3 mt-4"><a href="/docplan/plan_creation/" class="btn btn-round">{% trans 'О методике' %}</a></p>
               </div>
             </div>
           </div>
@@ -29,12 +30,20 @@
     <div class="container">
       <div class="row">
         <div class="col text-left">
-          <h2>Итак, вы решили взяться за новое дело... </h2>
-          <p class="text-h3">Возможно, это презентация, электронный курс, пост в блог или любой другой документ, качество которого зависит от того, будет ли он полезен вашим пользователям.</p>
+          <h2>{% trans 'Итак, вы решили взяться за новое дело...' %} </h2>
+          <p class="text-h3">{% blocktrans %}
+            Возможно, это презентация,
+            электронный курс, пост в блог или любой другой документ, качество которого зависит от того, будет ли он
+            полезен вашим пользователям.
+            {% endblocktrans %}</p>
 
-          <p class="text-h3">Если вы точно знаете, что следует включить в документ, а что лучше исключить, если твёрдо уверены, в каком порядке излагать информацию, то наше приложение вам уже не нужно.</p>
+          <p class="text-h3">{% blocktrans %}Если вы точно знаете, что следует
+            включить в документ, а что лучше исключить, если твёрдо уверены, в каком порядке излагать информацию, то
+            наше приложение вам уже не нужно.{% endblocktrans %}</p>
 
-          <p class="text-h3">Если же вы не знаете с чего начать или сомневаетесь в содержании, то оно вам, безусловно, поможет. Чтобы получить простой и понятный план документа вам предстоит выполнить следующие шаги:</p>
+          <p class="text-h3">{% blocktrans %}Если же вы не знаете с чего начать
+            или сомневаетесь в содержании, то оно вам, безусловно, поможет. Чтобы получить простой и понятный план
+            документа вам предстоит выполнить следующие шаги:{% endblocktrans %}</p>
         </div>
       </div>
     </div>
@@ -48,8 +57,9 @@
           <img alt="image" class="img-fluid" style="height:300px;" src="{% static "/imgs/target.svg" %}">
         </div>
         <div class="col-12 col-md-6 col-lg-6 ml-md-auto text-left">
-          <h1>Шаг 1</h1>
-          <p class="text-h3">Поймите, что вы хотите получить от вашего документа, и какую реакцию вы ожидаете от своих пользователей.</p>
+          <h1>{% trans 'Шаг 1' %}</h1>
+          <p class="text-h3">{% blocktrans %}Поймите, что вы хотите получить от вашего документа, и какую реакцию вы
+            ожидаете от своих пользователей.{% endblocktrans %}</p>
          </div>
       </div>
     </div>
@@ -60,8 +70,9 @@
     <div class="container">
       <div class="row align-items-center">
         <div class="col-12 col-md-6 col-lg-5">
-          <h1>Шаг 2</h1>
-          <p class="text-h3">Проведите несложный анализ и узнайте, кто ваши пользователи и что от документа они должны получить</p>
+          <h1>{% trans 'Шаг 2' %}</h1>
+          <p class="text-h3">{% blocktrans %}Проведите несложный анализ и узнайте, кто ваши пользователи и что от
+            документа они должны получить{% endblocktrans %}</p>
         </div>
         <div class="col-12 col-md-6 ml-md-auto mt-4 mt-md-0">
           <img alt="image" class="img-fluid" style="height:300px;" src="{% static "/imgs/teamwork-2.svg" %}">
@@ -78,8 +89,9 @@
           <img alt="image" class="img-fluid" style="height:300px;" src="{% static "/imgs/networking-1.svg" %}">
         </div>
         <div class="col-12 col-md-6 col-lg-5 ml-md-auto text-left">
-          <h1>Шаг 3</h1>
-          <p class="text-h3">Воспользуйтесь методом пользовательских вопросов и сформируйте содержание документа</p>
+          <h1>{% trans 'Шаг 3' %}</h1>
+          <p class="text-h3">{% blocktrans %} Воспользуйтесь методом пользовательских вопросов и сформируйте
+            содержание документа {% endblocktrans %}</p>
 
         </div>
       </div>
@@ -91,8 +103,9 @@
     <div class="container">
       <div class="row align-items-center">
         <div class="col-12 col-md-6 col-lg-5">
-          <h1>Шаг 4</h1>
-          <p class="text-h3">Проверьте содержание и разделите его на понятные разделы. Теперь можете приступать к их написанию...</p>
+          <h1>{% trans 'Шаг 4' %}</h1>
+          <p class="text-h3">{% blocktrans %} Проверьте содержание и разделите его на понятные разделы.
+            Теперь можете приступать к их написанию... {% endblocktrans %}</p>
         </div>
         <div class="col-12 col-md-6 ml-md-auto mt-4 mt-md-0">
           <img alt="image" class="img-fluid" style="height:300px;" src="{% static "/imgs/file.svg" %}">
@@ -106,12 +119,13 @@
     <div class="container">
       <div class="row justify-content-center">
         <div class="col-12 col-md-6 text-center">
-          <h1>Составить план</h1>
+          <h1>{% trans 'Составить план' %}</h1>
           <p class="text-h3">
-            Document Plan - это удобное приложение для составления плана вашего документа. Можете попробовать прямо сейчас
+            {% blocktrans %} Document Plan - это удобное приложение для составления плана вашего документа.
+            Можете попробовать прямо сейчас {% endblocktrans %}
           </p>
           <p class="mt-5 mt-sm-4">
-            <a class="btn" href="/docplan/new/edit/">Составить план</a>
+            <a class="btn" href="/docplan/new/edit/">{% trans 'Составить план' %}</a>
           </p>
         </div>
       </div>

@@ -12,7 +12,6 @@ def add_plan_data(request, context= {}, plan_id= None):
 		return context
 
 	user = request.user
-
 	try:
 		#add plan data
 		plan = Project.objects.get(id = plan_id)
@@ -31,10 +30,7 @@ def add_plan_data(request, context= {}, plan_id= None):
 
 			context['chapters'].append(cur_chapter_dict)
 
-
-
 	except Project.DoesNotExist:
-		print ("Плана с id %s не существует" % plan_id)
 		raise Http404
 
 	return context
