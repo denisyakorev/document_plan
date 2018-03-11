@@ -29,6 +29,7 @@ urlpatterns = [
     path('<str:plan_id>/ajax/chapters/', login_required(views.PlanEditView().get_chapters_data)),
     path('<str:plan_id>/save/', login_required(views.PlanEditView().save_data)),
     path('<str:plan_id>/delete/', login_required(views.PlanEditView().delete_plan)),
-    #path('<int:plan_id>/view_pdf/', views.PlanPdfView.as_view()),
+    path('plan_creation/', TemplateView.as_view(template_name= 'posts/plan_creation.html')),
+    path('<int:plan_id>/view_pdf/', views.PlanPdfView.as_view()),
 ]
 

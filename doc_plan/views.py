@@ -51,10 +51,14 @@ class PlanPdfView(TemplateView, PlanContextMixin):
 
 class PlanEditView(TemplateView):
     template_name = 'plan/plan_edit.html'
-    default_plan_id = 1
+    default_plan_id = None
+    sample_plan_id = 1
 
     def get_context_data(self, **kwargs):
-        context = {'edit': True}
+        context = {
+            'edit': True,
+            'sample_plan_id': self.sample_plan_id,
+        }
 
         if kwargs['plan_id'] == 'new':
             try:
@@ -64,6 +68,7 @@ class PlanEditView(TemplateView):
             context['plan'] = plan
         else:
             context = add_plan_data(self.request, context, kwargs['plan_id'])
+
 
         return context
 
