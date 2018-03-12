@@ -3,7 +3,6 @@ from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.models import User
 from django.views.decorators.http import require_http_methods
 import json
-from doc_plan.forms import PlanForm, ChapterForm
 
 
 # Create your models here.
@@ -80,52 +79,3 @@ class Chapter(models.Model):
 
 
 
-class PlanManager(models.Manager):
-
-    @require_http_methods(["POST"])
-    def save_data(self, request, *args, **kwargs):
-        """Метод для сохранения данных заполненного плана"""
-
-        errors = {}
-        # Проверяем данные плана
-        plan = request.POST.get('plan', None)
-        if plan == None:
-            return False
-
-        plan = json.loads(plan)
-        # Проверяем данные при помощи формы
-        plan_form = PlanForm(plan)
-        if not plan_form.is_valid():
-            errors['plan'] = []
-            errors['plan'].append(plan_form.errors)
-
-        # Проверяем данные разделов
-        chapters = request.POST.get('chapters', None)
-        if chapters != None:
-            chapters = json.loads(chapters)
-            chapters_cleaned_data = []
-            for chapter in chapters:
-                # Проверяем данные каждой главы при помощи формы
-                chapter_form = ChapterForm(chapter)
-                if not chapter_form.is_valid():
-                    errors['chapters'] = errors.get('chapters', [])
-                    errors['chapters'].append({
-                        'id': chapter['id'],
-                        'errors': chapter_form.errors
-                    })
-                else:
-                    chapter_data = chapter_form.cleaned_data
-                    chapter_data['id'] = chapter['id']
-                    chapters_cleaned_data.append(chapter_data)
-
-        # Если проверка плана и глав пройдена успешно - сохраняем
-        if not errors:
-            saved_chapters = self.save_chapters(chapters_cleaned_data)
-            plan_data = plan_form.cleaned_data
-            plan_data['created_by'] = request.user
-            plan_data['id'] = kwargs['plan_id']
-            new_plan_id = self.save_plan(plan_data, saved_chapters)
-            if new_plan_id:
-                return True
-
-        return False
