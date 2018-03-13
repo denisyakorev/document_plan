@@ -6,6 +6,53 @@ import json
 
 
 # Create your models here.
+class PlanManager(models.Manager):
+
+    def save_plan(self, plan_data, chapters):
+        """Метод сохранения плана"""
+
+        # Если создаётся новый план - в его id присутствует "new"
+        if plan_data['id'] == 'new':
+            # Перед сохранением удалим id, чтобы БД создала правильный
+            del plan_data['id']
+            plan = super().create(**plan_data)
+
+        else:
+            plan = super().get(created_by=plan_data['created_by'],
+                                                                  id=plan_data['id'])
+        if not plan:
+            return False
+
+        plan.update_plan(plan_data, chapters)
+
+        return plan.id
+
+
+
+class ChapterManager(models.Manager):
+
+    def save_chapters(self, chapters_data):
+        """Метод сохранения разделов"""
+        chapters = []
+        for chapter in chapters_data:
+            #Если создаётся новый раздел - в его id присутствует "new"
+            if "new" in chapter['id']:
+                old_chapter = False
+            else:
+                old_chapter = super().get(id=chapter['id'])
+
+            if not old_chapter:
+                #Если создаём новый раздел - удалим сначала переданный с клиента id, чтобы создался новый
+                del chapter['id']
+                new_chapter = super().create(**chapter)
+                chapters.append(new_chapter)
+            else:
+                old_chapter.update_chapter(chapter)
+                chapters.append(old_chapter)
+
+        return chapters
+
+
 class Project(models.Model):
     name = models.CharField(max_length=200, verbose_name=_("название проекта"))
     aim_action = models.TextField(blank=True, verbose_name=_("действие"))
@@ -24,6 +71,7 @@ class Project(models.Model):
     chapters = models.ManyToManyField("Chapter", blank=True, verbose_name=_("разделы"))
     created_at = models.DateField(auto_now_add=True)
     created_by = models.ForeignKey(User, on_delete=models.CASCADE)
+    objects = PlanManager()
 
     def __unicode__(self):
         return self.name
@@ -51,6 +99,7 @@ class Project(models.Model):
             self.chapters.add(chapter)
 
         self.save()
+        return True
 
     class Meta:
         verbose_name = _("проект")
@@ -61,6 +110,7 @@ class Project(models.Model):
 class Chapter(models.Model):
     name = models.CharField(max_length=200, verbose_name=_("название"))
     questions = models.TextField(blank=True, verbose_name=_("вопросы"))
+    objects = ChapterManager()
 
     def __unicode__(self):
         return self.name
