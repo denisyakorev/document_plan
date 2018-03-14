@@ -15,7 +15,7 @@
                 <h1>Document Plan</h1>
                 <p class="text-h3">{% trans 'Пойми, что должно быть в твоём документе' %}</p>
 
-                <p class="text-h3 mt-4"><a href="/docplan/plan_creation/" class="btn btn-round">{% trans 'О методике' %}</a></p>
+                <p class="text-h3 mt-4"><a href="{{ plan_creation_url }}" class="btn btn-round">{% trans 'О методике' %}</a></p>
               </div>
             </div>
           </div>
@@ -125,7 +125,7 @@
             Можете попробовать прямо сейчас {% endblocktrans %}
           </p>
           <p class="mt-5 mt-sm-4">
-            <a class="btn" href="/docplan/new/edit/">{% trans 'Составить план' %}</a>
+            <a class="btn" href="{{new_plan_url}}">{% trans 'Составить план' %}</a>
           </p>
         </div>
       </div>

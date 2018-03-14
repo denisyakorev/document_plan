@@ -16,12 +16,19 @@ class PlanContextMixin(ContextMixin):
 
     def get_context_data(self, **kwargs):
         context = super(PlanContextMixin, self).get_context_data(**kwargs)
-        context = add_plan_data(self.request, context=context, plan_id=context['plan_id'])
+        try:
+            context = add_plan_data(self.request, context=context, plan_id=context['plan_id'])
+        except KeyError:
+            context = add_plan_data(self.request, context=context)
+
+        context['plan_creation_url'] = reverse('plan_creation')
+        context['new_plan_url'] = reverse('edit_plan', args=['new'])
+
         return context
 
 
 
-class ProjectListView(ListView):
+class ProjectListView(ListView, PlanContextMixin):
     model = Project
     context_object_name = 'plans'
     template_name = 'plan/plans.html'
@@ -31,10 +38,9 @@ class ProjectListView(ListView):
         queryset = Project.objects.filter(created_by=self.request.user)
         return queryset
 
-    def get_context_data(self, **kwargs):
-        context = super(ProjectListView, self).get_context_data(**kwargs)
-        context['new_plan_url'] = reverse('edit_plan', args=['new'])
-        return context
+
+class LandingView(TemplateView, PlanContextMixin):
+	template_name = 'landing/content.html'
 
 
 class PlanView(TemplateView, PlanContextMixin):

@@ -16,21 +16,12 @@ def add_plan_data(request, context= {}, plan_id= None):
 		#add plan data
 		plan = Project.objects.get(id = plan_id)
 		context['plan'] = plan
-		#plan_dict = model_to_dict(plan)
-		#context['plan'] = {}
-		#for key in plan_dict:
-			#context['plan'][key] = plan_dict[key]
 
 		#add chapters data
 		context['chapters'] = []
 		for chapter in plan.chapters.all():
 			context['chapters'].append(chapter)
-			#cur_chapter_dict = {}
-			#cur_chapter = model_to_dict(chapter)
-			#for key in cur_chapter:
-				#cur_chapter_dict[key] = cur_chapter[key]
 
-			#context['chapters'].append(cur_chapter_dict)
 
 	except Project.DoesNotExist:
 		raise Http404
