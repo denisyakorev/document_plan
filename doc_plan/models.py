@@ -1,8 +1,7 @@
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.models import User
-from django.views.decorators.http import require_http_methods
-import json
+from django.urls import reverse
 
 
 # Create your models here.
@@ -78,6 +77,19 @@ class Project(models.Model):
 
     def __str__(self):
         return self.name
+
+    def get_url(self):
+        return reverse('view_plan', args=[self.id])
+
+    def get_edit_url(self):
+        print('get_edit_url')
+        return reverse('edit_plan', args=[self.id])
+
+    def get_delete_url(self):
+        return reverse('delete_plan', args=[self.id])
+
+    def get_download_url(self):
+        return reverse('download_plan', args=[self.id])
 
     def update_plan(self, plan_data, chapters):
         self.name = plan_data['name']

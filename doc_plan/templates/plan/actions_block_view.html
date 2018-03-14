@@ -6,16 +6,16 @@
          <div class="col">
              <ul class="nav justify-content-start">
                 <li class="nav-item">
-                  <a class="nav-link color-white" href="/docplan/{{plan.id}}/download/">{% trans 'Скачать' %}</a>
+                  <a class="nav-link color-white" href="{{plan.get_download_url}}">{% trans 'Скачать' %}</a>
                 </li>
 
           </ul>
          </div>
-         {% ifequal user.id plan.created_by %}
+         {% ifequal user plan.created_by %}
             <div class="col">
               <ul class="nav justify-content-end">
                 <li class="nav-item">
-                  <a class="nav-link color-white" href="/docplan/{{plan.id}}/edit/">{% trans 'Изменить' %}</a>
+                  <a class="nav-link color-white" href="{{plan.get_edit_url}}">{% trans 'Изменить' %}</a>
                 </li>
                 <li class="nav-item">
                   <a class="nav-link color-white" data-toggle="modal" data-target="#modal-approve">{% trans 'Удалить' %}</a>
@@ -36,7 +36,7 @@
       </div>
       <div class="modal-footer" style="text-align:center;">
         <a type="button" class="btn btn-secondary color-white" data-dismiss="modal">{% trans 'отмена'|capfirst %}</a>
-        <a type="button" class="btn btn-primary color-white" href="/docplan/{{plan.id}}/delete/">{% trans 'удалить'|capfirst %}</a>
+        <a type="button" class="btn btn-primary color-white" href="{{plan.get_delete_url}}">{% trans 'удалить'|capfirst %}</a>
       </div>
     </div>
   </div>

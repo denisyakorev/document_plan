@@ -20,7 +20,7 @@
 
                     <div class="panel panel-default">
                         <p class="mt-5 mt-sm-4">
-                          <a class="btn" href="/docplan/new/edit/">{% trans "создать план"|capfirst %}</a>
+                          <a class="btn" href="{{new_plan_url}}">{% trans "создать план"|capfirst %}</a>
                         </p>
 
                         <div class="panel-body">
@@ -40,7 +40,7 @@
                                         {% else %}
                                             <tr class="even">
                                         {% endif %}
-                                                <td><a href="/docplan/{{plan.id}}/view/">{{ plan.name }}</td>
+                                                <td><a href="{{plan.get_url}}">{{ plan }}</td>
                                                 <td>{{ plan.created_at|date:"j F Y" }}</td>
 
                                             </tr>
@@ -67,7 +67,7 @@
             <div class="col-lg-12">
                 <h1 class="page-header">{% trans "у вас нет ни одного созданного плана"|capfirst %}</h1>
                 <p class="mt-5 mt-sm-4">
-                  <a class="btn" href="/docplan/new/edit/">{% trans "создать план"|capfirst %}</a>
+                  <a class="btn" href="{{new_plan_url}}">{% trans "создать план"|capfirst %}</a>
                 </p>
             </div>
             <!-- /.col-lg-12 -->

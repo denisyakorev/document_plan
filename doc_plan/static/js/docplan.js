@@ -153,6 +153,7 @@ function initPage(){
 
 //Инициализация событий на отдельной строке
 function initRow(rowId){
+    
     $('#' + CHECKBOX_PREFIX + rowId).bind('change', toggleDeleteBtn);
     $('#' + UP_BTN_PREFIX + rowId).bind('click', moveUp);
 
@@ -164,6 +165,7 @@ function initRow(rowId){
 			startupFocus: startupFocus
 
             });
+
     });
 
 }

@@ -23,13 +23,13 @@ from django.contrib.auth.decorators import login_required
 
 urlpatterns = [
     path('', TemplateView.as_view(template_name= 'landing/content.html')),
-    path('<str:plan_id>/view/', views.PlanView.as_view()),
-    path('<str:plan_id>/edit/', login_required(views.PlanEditView.as_view())),
-    path('<str:plan_id>/download/', views.PlanPDF.as_view()),
+    path('<str:plan_id>/view/', views.PlanView.as_view(), name='view_plan'),
+    path('<str:plan_id>/edit/', login_required(views.PlanEditView.as_view()), name='edit_plan'),
+    path('<str:plan_id>/download/', views.PlanPDF.as_view(), name='download_plan'),
     path('<str:plan_id>/ajax/chapters/', login_required(views.PlanEditView().get_chapters_data)),
     path('<str:plan_id>/save/', login_required(views.PlanEditView().save_data)),
-    path('<str:plan_id>/delete/', login_required(views.PlanEditView().delete_plan)),
-    path('plan_creation/', TemplateView.as_view(template_name= 'posts/plan_creation.html')),
-    path('<int:plan_id>/view_pdf/', views.PlanPdfView.as_view()),
+    path('<str:plan_id>/delete/', login_required(views.PlanEditView().delete_plan), name='delete_plan'),
+    path('plan_creation/', TemplateView.as_view(template_name= 'posts/plan_creation.html'), name='plan_creation'),
+    #path('<int:plan_id>/view_pdf/', views.PlanPdfView.as_view()),
 ]
 

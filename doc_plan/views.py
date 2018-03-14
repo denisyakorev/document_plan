@@ -8,6 +8,8 @@ from django.http import HttpResponse, HttpResponseRedirect, Http404
 import json
 from doc_plan.forms import PlanForm, ChapterForm
 from precise_bbcode.bbcode import get_parser
+from django.urls import reverse
+from django.views.generic.list import ListView
 
 
 class PlanContextMixin(ContextMixin):
@@ -15,6 +17,23 @@ class PlanContextMixin(ContextMixin):
     def get_context_data(self, **kwargs):
         context = super(PlanContextMixin, self).get_context_data(**kwargs)
         context = add_plan_data(self.request, context=context, plan_id=context['plan_id'])
+        return context
+
+
+
+class ProjectListView(ListView):
+    model = Project
+    context_object_name = 'plans'
+    template_name = 'plan/plans.html'
+    paginate_by = 10
+
+    def get_queryset(self):
+        queryset = Project.objects.filter(created_by=self.request.user)
+        return queryset
+
+    def get_context_data(self, **kwargs):
+        context = super(ProjectListView, self).get_context_data(**kwargs)
+        context['new_plan_url'] = reverse('edit_plan', args=['new'])
         return context
 
 
@@ -47,6 +66,8 @@ class PlanEditView(TemplateView):
         context = {
             'edit': True,
             'sample_plan_id': self.sample_plan_id,
+            'sample_plan_url': reverse('view_plan', args=[self.sample_plan_id]),
+            'about_method_url': reverse('plan_creation'),
         }
 
         if kwargs['plan_id'] == 'new':
@@ -54,7 +75,7 @@ class PlanEditView(TemplateView):
             try:
                 plan = Project.objects.get(id=self.default_plan_id)
             except Project.DoesNotExist:
-                plan = {'name': _('Название нового плана')}
+                plan =  _('Название нового плана')
 
             context['plan'] = plan
         else:
@@ -95,24 +116,16 @@ class PlanEditView(TemplateView):
         if not plan_form.is_valid():
             errors['plan'].append(plan_form.errors)
         else:
-            cleaned_data['plan'] = plan_form.cleaned_data
-            cleaned_data['plan']['created_by'] = request.user
-            cleaned_data['plan']['id'] = kwargs['plan_id']
-
+            cleaned_data['plan'] = plan_form.get_cleaned_plan(request, kwargs)
 
         if chapters:
             for chapter in chapters:
                 #Проверяем данные каждой главы при помощи формы
                 chapter_form = ChapterForm(chapter)
                 if not chapter_form.is_valid():
-                    errors['chapters'].append({
-                        'id': chapter['id'],
-                        'errors': chapter_form.errors
-                    })
+                    errors['chapters'].append(chapter_form.get_chapter_errors())
                 else:
-                    chapter_data = chapter_form.cleaned_data
-                    chapter_data['id'] = chapter['id']
-                    cleaned_data['chapters'].append(chapter_data)
+                    cleaned_data['chapters'].append(chapter_form.get_cleaned_chapter())
 
         #Если проверка плана и глав пройдена успешно - сохраняем
         if not errors['plan'] and not errors['chapters']:
@@ -149,12 +162,15 @@ class PlanEditView(TemplateView):
             chapters = []
         else:
             context = add_plan_data(request, context={}, plan_id=kwargs['plan_id'])
-            chapters = context['chapters']
+            chapters = []
             #Преобразовываем данных из bbcode (данные из клиента поступают в формате bbcode)
             parcer = get_parser()
-            for chapter in chapters:
-                chapter['name'] = parcer.render(chapter['name'])
-                chapter['questions'] = parcer.render(chapter['questions'])
+            for chapter in context['chapters']:
+                chapters.append({
+                    'id': chapter.id,
+                    'name': parcer.render(chapter.name),
+                    'questions': parcer.render(chapter.questions)
+                })
 
         response = HttpResponse(json.dumps({'chapters': chapters}),
                                 content_type='application/json')
