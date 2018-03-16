@@ -82,7 +82,6 @@ class Project(models.Model):
         return reverse('view_plan', args=[self.id])
 
     def get_edit_url(self):
-        print('get_edit_url')
         return reverse('edit_plan', args=[self.id])
 
     def get_delete_url(self):
