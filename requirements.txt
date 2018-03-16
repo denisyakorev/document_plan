@@ -1,0 +1,9 @@
+Django==2.0.1
+django-ckeditor==5.4.0
+django-js-asset==1.0.0
+django-precise-bbcode==1.2.9
+django-wkhtmltopdf==3.1.0
+djangoajax==2.4
+Pillow==5.0.0
+pkg-resources==0.0.0
+pytz==2017.3
