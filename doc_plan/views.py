@@ -8,15 +8,39 @@ from django.http import HttpResponse, HttpResponseRedirect, Http404
 import json
 from doc_plan.forms import PlanForm, ChapterForm
 from precise_bbcode.bbcode import get_parser
-from django.views.decorators.http import require_http_methods
+from django.urls import reverse
+from django.views.generic.list import ListView
 
 
 class PlanContextMixin(ContextMixin):
 
     def get_context_data(self, **kwargs):
         context = super(PlanContextMixin, self).get_context_data(**kwargs)
-        context = add_plan_data(self.request, context=context, plan_id=context['plan_id'])
+        try:
+            context = add_plan_data(self.request, context=context, plan_id=context['plan_id'])
+        except KeyError:
+            context = add_plan_data(self.request, context=context)
+
+        context['plan_creation_url'] = reverse('plan_creation')
+        context['new_plan_url'] = reverse('edit_plan', args=['new'])
+
         return context
+
+
+
+class ProjectListView(ListView, PlanContextMixin):
+    model = Project
+    context_object_name = 'plans'
+    template_name = 'plan/plans.html'
+    paginate_by = 10
+
+    def get_queryset(self):
+        queryset = Project.objects.filter(created_by=self.request.user)
+        return queryset
+
+
+class LandingView(TemplateView, PlanContextMixin):
+	template_name = 'landing/content.html'
 
 
 class PlanView(TemplateView, PlanContextMixin):
@@ -24,8 +48,11 @@ class PlanView(TemplateView, PlanContextMixin):
 
 
 class PlanPDF(PDFTemplateView, PlanContextMixin):
-    filename = 'plan_pdf.pdf'
     template_name = 'plan/plan_pdf/plan_pdf.html'
+
+    def get_filename(self):
+        plan = Project.objects.get(id=self.kwargs['plan_id'])
+        return 'plan_'+ str(plan.id) + ".pdf"
 
 
 class PlanPdfView(TemplateView, PlanContextMixin):
@@ -45,6 +72,8 @@ class PlanEditView(TemplateView):
         context = {
             'edit': True,
             'sample_plan_id': self.sample_plan_id,
+            'sample_plan_url': reverse('view_plan', args=[self.sample_plan_id]),
+            'about_method_url': reverse('plan_creation'),
         }
 
         if kwargs['plan_id'] == 'new':
@@ -52,7 +81,7 @@ class PlanEditView(TemplateView):
             try:
                 plan = Project.objects.get(id=self.default_plan_id)
             except Project.DoesNotExist:
-                plan = {'name': _('Название нового плана')}
+                plan =  _('Название нового плана')
 
             context['plan'] = plan
         else:
@@ -60,49 +89,55 @@ class PlanEditView(TemplateView):
 
         return context
 
-    @require_http_methods(["POST"])
+
     def save_data(self, request, *args, **kwargs):
         """Метод для сохранения данных заполненного плана"""
+        if request.method != "POST":
+            return self.bad_request(message="incorrect method")
 
-        errors = {}
         #Проверяем данные плана
         plan = request.POST.get('plan', None)
         if plan == None:
             return self.bad_request(message="plan does not exists")
+        else:
+            plan = json.loads(plan)
 
-        plan = json.loads(plan)
-        #Проверяем данные при помощи формы
-        plan_form = PlanForm(plan)
-        if not plan_form.is_valid():
-            errors['plan'] = []
-            errors['plan'].append(plan_form.errors)
-
-        #Проверяем данные разделов
+        # Проверяем данные разделов
         chapters = request.POST.get('chapters', None)
         if chapters != None:
             chapters = json.loads(chapters)
-            chapters_cleaned_data = []
+
+        errors = {
+            'plan': [],
+            'chapters': [],
+        }
+
+        cleaned_data = {
+            'plan': [],
+            'chapters': [],
+        }
+
+        #Проверяем данные при помощи формы
+        plan_form = PlanForm(plan)
+        if not plan_form.is_valid():
+            errors['plan'].append(plan_form.errors)
+        else:
+            cleaned_data['plan'] = plan_form.get_cleaned_plan(request, kwargs)
+
+        if chapters:
             for chapter in chapters:
                 #Проверяем данные каждой главы при помощи формы
                 chapter_form = ChapterForm(chapter)
                 if not chapter_form.is_valid():
-                    errors['chapters'] = errors.get('chapters', [])
-                    errors['chapters'].append({
-                    'id': chapter['id'],
-                    'errors': chapter_form.errors
-                    })
+                    errors['chapters'].append(chapter_form.get_chapter_errors())
                 else:
-                    chapter_data = chapter_form.cleaned_data
-                    chapter_data['id'] = chapter['id']
-                    chapters_cleaned_data.append(chapter_data)
+                    cleaned_data['chapters'].append(chapter_form.get_cleaned_chapter())
 
         #Если проверка плана и глав пройдена успешно - сохраняем
-        if not errors:
-            saved_chapters = self.save_chapters(chapters_cleaned_data)
-            plan_data = plan_form.cleaned_data
-            plan_data['created_by'] = request.user
-            plan_data['id'] = kwargs['plan_id']
-            new_plan_id = self.save_plan(plan_data, saved_chapters)
+        if not errors['plan'] and not errors['chapters']:
+            saved_chapters = Chapter.objects.save_chapters(cleaned_data['chapters'])
+            new_plan_id = Project.objects.save_plan(cleaned_data['plan'], saved_chapters)
+
             if new_plan_id:
                 response = HttpResponse(json.dumps({'plan_id': new_plan_id}),
                              content_type='application/json')
@@ -110,47 +145,6 @@ class PlanEditView(TemplateView):
                 return response
 
         return self.bad_request(message="Incorrect data", errors=errors)
-
-
-    def save_chapters(self, chapters_data):
-        """Метод сохранения разделов"""
-        chapters = []
-        for chapter in chapters_data:
-            #Если создаётся новый раздел - в его id присутствует "new"
-            if "new" in chapter['id']:
-                old_chapter = False
-            else:
-                old_chapter = Chapter.objects.get(id=chapter['id'])
-
-            if not old_chapter:
-                #Если создаём новый раздел - удалим сначала переданный с клиента id, чтобы создался новый
-                del chapter['id']
-                new_chapter = Chapter.objects.create(**chapter)
-                chapters.append(new_chapter)
-            else:
-                old_chapter.update_chapter(chapter)
-                chapters.append(old_chapter)
-
-        return chapters
-
-
-    def save_plan(self, plan_data, chapters):
-        """Метод сохранения плана"""
-
-        # Если создаётся новый план - в его id присутствует "new"
-        if plan_data['id'] == 'new':
-            # Перед сохранением удалим id, чтобы БД создала правильный
-            del plan_data['id']
-            plan = Project.objects.create(**plan_data)
-        else:
-            plan = Project.objects.get(created_by=plan_data['created_by'],
-                                                                  id=plan_data['id'])
-            if not plan:
-                return False
-
-            Project.update_plan(plan_data, chapters)
-
-        return plan.id
 
 
     def delete_plan(self, request, *args, **kwargs):
@@ -174,12 +168,15 @@ class PlanEditView(TemplateView):
             chapters = []
         else:
             context = add_plan_data(request, context={}, plan_id=kwargs['plan_id'])
-            chapters = context['chapters']
+            chapters = []
             #Преобразовываем данных из bbcode (данные из клиента поступают в формате bbcode)
             parcer = get_parser()
-            for chapter in chapters:
-                chapter['name'] = parcer.render(chapter['name'])
-                chapter['questions'] = parcer.render(chapter['questions'])
+            for chapter in context['chapters']:
+                chapters.append({
+                    'id': chapter.id,
+                    'name': parcer.render(chapter.name),
+                    'questions': parcer.render(chapter.questions)
+                })
 
         response = HttpResponse(json.dumps({'chapters': chapters}),
                                 content_type='application/json')

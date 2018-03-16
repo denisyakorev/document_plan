@@ -9,9 +9,9 @@
         <div class="col text-left">
 
           {% if edit %}
-            <h2 id="name" js-plan-id="{{plan.id}}" class="plan inline_editing" contenteditable="true">{{plan.name|bbcode|safe}}</h2>
+            <h2 id="name" js-plan-id="{{plan.id}}" class="plan inline_editing" contenteditable="true">{{plan|bbcode|safe}}</h2>
           {% else %}
-            <h2>{{plan.name|bbcode|safe}}</h2>
+            <h2>{{plan|bbcode|safe}}</h2>
           {% endif %}
         </div>
       </div>

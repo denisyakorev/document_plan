@@ -31,6 +31,14 @@ class PlanForm(ModelForm):
 
         }
 
+    def get_cleaned_plan(self, request, kwargs):
+        result = self.cleaned_data
+        result['created_by'] = request.user
+        result['id'] = kwargs['plan_id']
+        return result
+
+
+
 
 class ChapterForm(ModelForm):
 
@@ -41,3 +49,15 @@ class ChapterForm(ModelForm):
         widgets = {
             'questions': CKEditorWidget(config_name='default'),
         }
+
+    def get_chapter_errors(self):
+        result = {
+            'id': self.data['id'],
+            'errors': self.errors,
+        }
+        return result
+
+    def get_cleaned_chapter(self):
+        result = self.cleaned_data
+        result['id'] = self.data['id']
+        return result
