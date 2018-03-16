@@ -24,6 +24,7 @@ from django.contrib.auth.decorators import login_required
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', include('doc_plan.urls')),
     path('docplan/', include('doc_plan.urls')),
     path('accounts/login/', login),
     path('accounts/logout/', logout, {'next_page':'/docplan/'}),
