@@ -22,7 +22,58 @@ th{
 }
 
 
-.color-white {
-    color: white;
+button {
+    cursor: pointer;
 }
+
+
+button:hover {
+    cursor: pointer;
+}
+
+
+#preloader {
+    margin-left:48%;
+}
+
+
+#name {
+    background-color: #F4F4F4;
+}
+
+
+.color-white {
+    color: white !important;
+    cursor:pointer;
+}
+
+.table-management-panel{
+    margin-bottom:30px;
+}
+
+.table-management-panel button{
+    margin-right:30px;
+}
+
+.btn-danger {
+    color: #fff;
+    background-color: #dc3545;
+    border-color: #dc3545;
+}
+
+
+.btn-danger:hover {
+    color: #fff;
+    background-color: #c82333;
+    border-color: #bd2130;
+}
+
+.error_message{
+    color:red;
+    font-style: italic;
+}
+
+
+
+
 

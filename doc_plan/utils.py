@@ -29,5 +29,3 @@ def add_plan_data(request, context= {}, plan_id= None):
 	return context
 
 
-
-
