@@ -176,3 +176,6 @@ CKEDITOR_CONFIGS = {
 }
 
 
+WKHTMLTOPDF_CMD = os.path.join(BASE_DIR, 'wkhtmltopdf/wkhtmltopdf')
+
+
