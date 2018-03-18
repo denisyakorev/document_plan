@@ -41,6 +41,10 @@ button:hover {
     background-color: #F4F4F4;
 }
 
+.x-scroll-section{
+  overflow-x: auto;
+}
+
 
 .color-white {
     color: white !important;

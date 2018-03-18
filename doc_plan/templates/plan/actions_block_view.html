@@ -4,25 +4,23 @@
    <div class="container">
      <div class="row">
          <div class="col">
-             <ul class="nav justify-content-start">
+            <ul class="nav justify-content-start">
                 <li class="nav-item">
                   <a class="nav-link color-white" href="{{plan.get_download_url}}">{% trans 'Скачать' %}</a>
                 </li>
-
-          </ul>
-         </div>
+            
          {% ifequal user plan.created_by %}
-            <div class="col">
-              <ul class="nav justify-content-end">
-                <li class="nav-item">
-                  <a class="nav-link color-white" href="{{plan.get_edit_url}}">{% trans 'Изменить' %}</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link color-white" data-toggle="modal" data-target="#modal-approve">{% trans 'Удалить' %}</a>
-                </li>
-              </ul>
-            </div>
+          
+              <li class="nav-item">
+                <a class="nav-link color-white" href="{{plan.get_edit_url}}">{% trans 'Изменить' %}</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link color-white" data-toggle="modal" data-target="#modal-approve">{% trans 'Удалить' %}</a>
+              </li>
+            
          {% endifequal %}
+            </ul>
+          </div>
      </div>
 </div>
 
