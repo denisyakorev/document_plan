@@ -1,0 +1,103 @@
+<style>
+       /* Page Breaks */
+
+/***Always insert a page break before the element***/
+       .pb_before {
+           page-break-before: always !important;
+       }
+
+/***Always insert a page break after the element***/
+       .pb_after {
+           page-break-after: always !important;
+       }
+
+/***Avoid page break before the element (if possible)***/
+       .pb_before_avoid {
+           page-break-before: avoid !important;
+       }
+
+/***Avoid page break after the element (if possible)***/
+       .pb_after_avoid {
+           page-break-after: avoid !important;
+       }
+
+/* Avoid page break inside the element (if possible) */
+       .pbi_avoid {
+           page-break-inside: avoid !important;
+       }
+
+
+
+/* Page styles */
+body{
+    max-height: 297mm;
+    width: 210mm;
+    font-family: Roboto Condensed, Roboto;
+}
+
+th {
+    background-color: #343A40;
+    color: white;
+    text-align: center;
+}
+
+.table thead th {
+    vertical-align: bottom;
+    border-bottom: 2px solid #e9ecef;
+}
+
+table {
+    border-collapse: collapse;
+}
+
+.table-bordered td, .table-bordered th {
+    border: 1px solid #e9ecef;
+}
+
+.table td, .table th {
+    padding: .75rem;
+    vertical-align: top;
+
+}
+
+.page{
+    max-height: 297mm;
+    width: 210mm;
+    font-family: Roboto Condensed, Roboto;
+}
+
+
+.header{
+    background-color: #343A40;
+    min-height: 20mm;
+}
+
+.footer{
+    background-color: #343A40;
+    min-height: 20mm;
+}
+
+.content{
+    height: 237mm;
+    width: 190mm;
+    padding: 0 30px 20px 30px;
+}
+
+.title{
+    text-align: center;
+    vertical-align: middle;
+    padding-top: 50px;
+}
+
+.header-title{
+    color: white;
+    font-size: 32px;
+    padding:10px 0 0 15px;
+}
+
+
+.table{
+    width: 100%;
+}
+
+</style>

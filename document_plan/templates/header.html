@@ -11,7 +11,7 @@
         </div>
 
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse-4" aria-controls="navbarNav7" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
+          <span><img src="{% static "/imgs/104696_2.png" %}" height="30" alt="image"></span>
         </button>
 
         <div class="collapse navbar-collapse navbar-collapse-4 justify-content-center col-md-6" id="navbarNav7">
@@ -24,8 +24,11 @@
             <li class="nav-item">
               <a class="nav-link" href="/accounts/login/">{% trans 'войти'|capfirst %}</a>
             </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/accounts/signup/">{% trans 'регистрация'|capfirst %}</a>
+            </li>
           </ul>
-          <a class="btn ml-md-3" href="/accounts/signup/">{% trans 'регистрация'|capfirst  %}</a>
+          
         </div>
         {% else %}
             <li class="nav-item dropdown">
