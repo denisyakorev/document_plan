@@ -1,20 +1,4 @@
-{% load static %}
-<!DOCTYPE html>
-<html>
-<head>
-  <title>Document Plan</title>
-  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0" />
-  <meta charset="utf-8">
-
-  
-  <link rel="stylesheet" href="{% static "/css/bootstrap4.0.0-beta.2.min.css" %}">
-  <link href="{% static "/fonts/font.css" %}" rel="stylesheet">
-  <link rel="stylesheet" href="{% static "/css/font-awesome.css" %}">
-
-  <link type="text/css" rel="stylesheet" href="{% static "/css/froala_blocks.css" %}">
-  <link rel="stylesheet" href="{% static "/css/docplan.css" %}">
-
-  <!-- Yandex.Metrika counter -->
+<!-- Yandex.Metrika counter -->
 <script type="text/javascript" >
     (function (d, w, c) {
         (w[c] = w[c] || []).push(function() {
@@ -43,29 +27,3 @@
 </script>
 <noscript><div><img src="https://mc.yandex.ru/watch/48103136" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
 <!-- /Yandex.Metrika counter -->
-
-  <style>
-    .fdb-block {
-      border-bottom: solid 1px #EEE;
-    }
-  </style>
-
-  {% block additional_styles %}{% endblock %}
-
-</head>
-
-<body>
-
-{% include "header.html" %}
-
-{% block content %}{% endblock %}
-
-<!--Футер-->
-{% include "footer.html" %}
-
-{% include "scripts.html" %}
-
-{% block additional_scripts %}{% endblock %}
-
-</body>
-</html>
