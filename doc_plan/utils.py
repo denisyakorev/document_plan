@@ -1,6 +1,6 @@
 #!-- coding:utf-8 --
 
-from doc_plan.models import Project
+from doc_plan.models import Project, ChapterOrder
 from django.http import Http404
 from django.forms.models import model_to_dict
 
@@ -19,8 +19,8 @@ def add_plan_data(request, context= {}, plan_id= None):
 
 		#add chapters data
 		context['chapters'] = []
-		for chapter in plan.chapters.all():
-			context['chapters'].append(chapter)
+		for chapter_order in ChapterOrder.objects.filter(project=plan).order_by('order'):
+			context['chapters'].append(chapter_order.chapter)
 
 
 	except Project.DoesNotExist:

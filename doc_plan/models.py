@@ -67,7 +67,7 @@ class Project(models.Model):
     auditory_resume = models.TextField(blank=True, verbose_name=_("выводы"))
     question_actions = models.TextField(blank=True, verbose_name=_("процедуры"))
     question_knowledges = models.TextField(blank=True, verbose_name=_("знания"))
-    chapters = models.ManyToManyField("Chapter", blank=True, verbose_name=_("разделы"))
+    chapters_order = models.ManyToManyField("Chapter", through="ChapterOrder", blank=True, verbose_name=_("разделы"), related_name='chapters_order')
     created_at = models.DateField(auto_now_add=True)
     created_by = models.ForeignKey(User, on_delete=models.CASCADE)
     objects = PlanManager()
@@ -105,9 +105,11 @@ class Project(models.Model):
         self.auditory_resume = plan_data['auditory_resume']
         self.question_actions = plan_data['question_actions']
         self.question_knowledges = plan_data['question_knowledges']
-        self.chapters.clear()
+        ChapterOrder.objects.filter(project=self).delete()
+        counter = 0
         for chapter in chapters:
-            self.chapters.add(chapter)
+            co = ChapterOrder(project=self, chapter=chapter, order=counter)
+            co.save()            
 
         self.save()
         return True
@@ -137,6 +139,22 @@ class Chapter(models.Model):
     class Meta:
         verbose_name = _("раздел")
         verbose_name_plural = _("разделы")
+
+
+class ChapterOrder(models.Model):
+    project = models.ForeignKey(Project, on_delete=models.CASCADE)
+    chapter = models.ForeignKey(Chapter, on_delete=models.CASCADE)
+    order = models.IntegerField(blank=True, null=True)
+
+    def __unicode__(self):
+        return self.project.name
+
+    def __str__(self):
+        return self.project.name
+
+    class Meta:
+        verbose_name = _("разделы плана")
+        verbose_name_plural = _("разделы плана")
 
 
 
